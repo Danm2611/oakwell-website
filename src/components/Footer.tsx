@@ -293,18 +293,18 @@ const Footer: React.FC = () => {
                 © 2024 Oakwell Roofing Contractors. All rights reserved.
               </div>
               <div className="flex flex-wrap gap-6 text-sm">
-                <a href="#" className="text-oakwell-light hover:text-white transition-colors">
+                <span className="text-oakwell-light">
                   Privacy Policy
-                </a>
-                <a href="#" className="text-oakwell-light hover:text-white transition-colors">
+                </span>
+                <span className="text-oakwell-light">
                   Terms of Service
-                </a>
-                <a href="#" className="text-oakwell-light hover:text-white transition-colors">
+                </span>
+                <span className="text-oakwell-light">
                   Cookie Policy
-                </a>
-                <a href="#" className="text-oakwell-light hover:text-white transition-colors">
+                </span>
+                <span className="text-oakwell-light">
                   Complaints Procedure
-                </a>
+                </span>
               </div>
             </div>
           </div>
