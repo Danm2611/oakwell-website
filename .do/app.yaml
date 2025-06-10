@@ -1,0 +1,15 @@
+name: oakwell-website
+region: nyc
+static_sites:
+- name: web
+  source_dir: /
+  github:
+    repo: Danm2611/oakwell-website
+    branch: main
+    deploy_on_push: true
+  build_command: npm run build
+  output_dir: build
+  index_document: index.html
+  error_document: index.html
+  routes:
+  - path: /
