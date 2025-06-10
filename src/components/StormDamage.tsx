@@ -30,7 +30,7 @@ const StormDamage: React.FC = () => {
   ];
 
   const stats = [
-    { number: "£2.3M", label: "Successful Claims Processed" },
+    { number: "100's", label: "Successful Claims Processed" },
     { number: "98%", label: "Claim Success Rate" },
     { number: "24hrs", label: "Average Response Time" },
     { number: "500+", label: "Storm Repairs Completed" }
@@ -49,8 +49,8 @@ const StormDamage: React.FC = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1561484930-998b6a7b22d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="Storm damage on roof"
+                src="/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg"
+                alt="Professional slate roof installation showing quality craftsmanship"
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -74,7 +74,7 @@ const StormDamage: React.FC = () => {
                 className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg"
               >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-oakwell-dark">£2.3M</div>
+                  <div className="text-2xl font-bold text-oakwell-dark">100's</div>
                   <div className="text-sm text-gray-600">Claims Processed</div>
                 </div>
               </motion.div>

@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-20 h-full flex items-center">
-        <div className="section-container">
+        <div className="section-container pt-20 md:pt-24">
           <div className="max-w-4xl">
             {/* Main Headline */}
             <motion.h1

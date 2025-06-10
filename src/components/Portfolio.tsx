@@ -19,68 +19,35 @@ const Portfolio: React.FC = () => {
     {
       id: 1,
       category: 'pitched',
-      title: 'Victorian Terrace Re-roof',
-      location: 'Leeds, West Yorkshire',
+      title: 'Premium Slate Roof Installation',
+      location: 'Huddersfield, West Yorkshire',
       date: '2024',
-      costRange: '£6,000 - £8,000',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
-      description: 'Complete slate roof replacement with modern insulation and breathable membrane.'
+      costRange: '£8,000 - £12,000',
+      before: '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
+      after: '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
+      description: 'Beautiful Welsh slate roof with traditional ridge tiles and proper ventilation system. Showcasing premium craftsmanship on residential property.'
     },
     {
       id: 2,
-      category: 'flat',
-      title: 'Modern Extension Flat Roof',
-      location: 'Bradford, West Yorkshire',
+      category: 'commercial',
+      title: 'New Build Commercial Roofing',
+      location: 'Leeds, West Yorkshire',
       date: '2024',
-      costRange: '£3,500 - £4,500',
+      costRange: '£15,000 - £22,000',
       before: '/images/WhatsApp Image 2025-04-07 at 22.33.11.jpeg',
       after: '/images/WhatsApp Image 2025-04-07 at 22.33.12.jpeg',
-      description: 'High-performance EPDM flat roof installation with 20-year warranty.'
+      description: 'Large-scale new construction project featuring modern slate roofing system. Aerial view shows professional installation across substantial property development.'
     },
     {
       id: 3,
-      category: 'commercial',
-      title: 'Industrial Warehouse Roof',
-      location: 'Wakefield, West Yorkshire',
-      date: '2024',
-      costRange: '£15,000 - £20,000',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
-      description: 'Large-scale commercial roof replacement with energy-efficient materials.'
-    },
-    {
-      id: 4,
-      category: 'heritage',
-      title: 'Listed Building Restoration',
-      location: 'Halifax, West Yorkshire',
-      date: '2024',
-      costRange: '£12,000 - £15,000',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.09 (1).jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (1).jpeg',
-      description: 'Sympathetic restoration using traditional Welsh slate and heritage techniques.'
-    },
-    {
-      id: 5,
-      category: 'pitched',
-      title: 'Modern Family Home',
-      location: 'Huddersfield, West Yorkshire',
-      date: '2024',
-      costRange: '£7,500 - £9,500',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (2).jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (3).jpeg',
-      description: 'Contemporary tile roof with integrated solar panel preparation.'
-    },
-    {
-      id: 6,
       category: 'flat',
-      title: 'City Centre Apartment',
-      location: 'Leeds, West Yorkshire',
+      title: 'Professional Flat Roof System',
+      location: 'Bradford, West Yorkshire',
       date: '2024',
-      costRange: '£4,000 - £5,500',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (4).jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (5).jpeg',
-      description: 'Premium GRP flat roof system with 25-year manufacturer warranty.'
+      costRange: '£4,500 - £6,500',
+      before: '/images/WhatsApp Image 2025-04-07 at 22.33.11.jpeg',
+      after: '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
+      description: 'High-performance single-ply membrane flat roof installation with proper drainage and weatherproofing. Features clean lines and professional finish.'
     }
   ];
 
