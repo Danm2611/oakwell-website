@@ -49,8 +49,8 @@ const StormDamage: React.FC = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg"
-                alt="Professional slate roof installation showing quality craftsmanship"
+                src="/images/WhatsApp Image 2025-04-07 at 22.33.09 (1).jpeg"
+                alt="Complete roof replacement with scaffolding - professional roofing work"
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />

@@ -19,35 +19,68 @@ const Portfolio: React.FC = () => {
     {
       id: 1,
       category: 'pitched',
-      title: 'Premium Slate Roof Installation',
-      location: 'Huddersfield, West Yorkshire',
+      title: 'Complete Slate Re-Roof',
+      location: 'West Yorkshire',
       date: '2024',
       costRange: '£8,000 - £12,000',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
-      description: 'Beautiful Welsh slate roof with traditional ridge tiles and proper ventilation system. Showcasing premium craftsmanship on residential property.'
+      before: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (1).jpeg',
+      after: '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
+      description: 'Full slate roof replacement with new ridge tiles and lead flashing. Complete transformation from worn tiles to premium slate finish.'
     },
     {
       id: 2,
-      category: 'commercial',
-      title: 'New Build Commercial Roofing',
-      location: 'Leeds, West Yorkshire',
-      date: '2024',
-      costRange: '£15,000 - £22,000',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.11.jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.12.jpeg',
-      description: 'Large-scale new construction project featuring modern slate roofing system. Aerial view shows professional installation across substantial property development.'
+      category: 'pitched',
+      title: 'Terracotta Tile Roof',
+      location: 'West Yorkshire',
+      date: '2025',
+      costRange: '£7,000 - £10,000',
+      before: '/images/hip-roof-tiles.jpg',
+      after: '/images/terracotta-tile-roof.jpg',
+      description: 'Traditional terracotta tile installation on a hip roof. New ridge tiles and professional finish throughout.'
     },
     {
       id: 3,
       category: 'flat',
-      title: 'Professional Flat Roof System',
-      location: 'Bradford, West Yorkshire',
-      date: '2024',
+      title: 'GRP Flat Roof with Skylight',
+      location: 'West Yorkshire',
+      date: '2025',
       costRange: '£4,500 - £6,500',
-      before: '/images/WhatsApp Image 2025-04-07 at 22.33.11.jpeg',
-      after: '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
-      description: 'High-performance single-ply membrane flat roof installation with proper drainage and weatherproofing. Features clean lines and professional finish.'
+      before: '/images/flat-roof-skylight.jpg',
+      after: '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg',
+      description: 'Modern GRP fibreglass flat roof system with integrated skylight. Seamless finish with 20+ year lifespan.'
+    },
+    {
+      id: 4,
+      category: 'commercial',
+      title: 'New Build Slate Roofing',
+      location: 'West Yorkshire',
+      date: '2025',
+      costRange: '£18,000 - £25,000',
+      before: '/images/new-build-aerial.jpg',
+      after: '/images/complex-slate-aerial.jpg',
+      description: 'Large new build project with complex slate roof design. Multiple roof sections with dormers and valleys.'
+    },
+    {
+      id: 5,
+      category: 'flat',
+      title: 'Extension Flat Roof',
+      location: 'West Yorkshire',
+      date: '2024',
+      costRange: '£3,500 - £5,000',
+      before: '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
+      after: '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg',
+      description: 'GRP flat roof on residential extension. Clean grey finish with proper drainage and edge trim details.'
+    },
+    {
+      id: 6,
+      category: 'pitched',
+      title: 'Modern Tile Re-Roof',
+      location: 'West Yorkshire',
+      date: '2025',
+      costRange: '£6,500 - £9,000',
+      before: '/images/tile-roof-dormer.jpg',
+      after: '/images/tile-roof-dormer.jpg',
+      description: 'New concrete tile installation with dormer window integration. Fresh modern look with long-lasting materials.'
     }
   ];
 
