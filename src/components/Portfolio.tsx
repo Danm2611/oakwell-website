@@ -10,14 +10,16 @@ const Portfolio: React.FC = () => {
     '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
     '/images/terracotta-tile-roof.jpg',
     '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg',
-    '/images/new-build-aerial.jpg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.10 (3).jpeg',
     '/images/hip-roof-tiles.jpg',
     '/images/flat-roof-skylight.jpg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.12 (3).jpeg',
     '/images/tile-roof-dormer.jpg',
-    '/images/new-build-slate.jpg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.14 (2).jpeg',
     '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.12.jpeg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.12 (1).jpeg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
+    '/images/grp-flat-roof-extension.jpg',
   ];
 
   return (
