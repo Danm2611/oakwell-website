@@ -1,17 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin,
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
   Shield,
   Award,
   FileText,
-  Clock
+  Clock,
+  Star
 } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -41,10 +40,8 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' }
+    { icon: Facebook, href: 'https://www.facebook.com/p/Oakwell-Roofing-Ltd-100089302566138/', label: 'Facebook' },
+    { icon: Instagram, href: 'https://www.instagram.com/oakwell_roofing_ltd/', label: 'Instagram' }
   ];
 
   return (

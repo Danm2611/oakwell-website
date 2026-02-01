@@ -5,6 +5,7 @@ import Services from './components/Services';
 import StormDamage from './components/StormDamage';
 import Portfolio from './components/Portfolio';
 import WhyChooseUs from './components/WhyChooseUs';
+import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
@@ -18,6 +19,7 @@ function App() {
       <StormDamage />
       <Portfolio />
       <WhyChooseUs />
+      <Reviews />
       <Contact />
       <Footer />
       <FloatingCTA />
