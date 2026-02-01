@@ -22,19 +22,14 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Video Background */}
+      {/* Image Background */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/images/complex-slate-aerial.jpg"
+          alt="Professional slate roofing by Oakwell Roofing"
           className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-neighborhood-with-red-roofs-1955-large.mp4" type="video/mp4" />
-        </video>
-        
+        />
+
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
       </div>
@@ -104,23 +99,25 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.8, delay: 1.1 }}
               className="flex flex-col sm:flex-row gap-4 mb-12"
             >
-              <motion.button
+              <motion.a
+                href="tel:07469179470"
                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(239, 68, 68, 0.4)' }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-emergency flex items-center justify-center space-x-3 text-lg px-8 py-4"
               >
                 <Phone className="w-5 h-5" />
                 <span>Get Emergency Help</span>
-              </motion.button>
-              
-              <motion.button
+              </motion.a>
+
+              <motion.a
+                href="#contact"
                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(27, 94, 145, 0.4)' }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary flex items-center justify-center space-x-3 text-lg px-8 py-4"
               >
                 <Calendar className="w-5 h-5" />
                 <span>Free Roof Inspection</span>
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             {/* Trust Badges */}

@@ -58,22 +58,26 @@ const FloatingCTA: React.FC = () => {
                     <span>Emergency: 07469 179470</span>
                   </motion.a>
 
-                  <motion.button
+                  <motion.a
+                    href="#contact"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full bg-oakwell-dark hover:bg-oakwell-medium text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                    className="w-full bg-oakwell-dark hover:bg-oakwell-medium text-white font-semibold py-3 px-4 rounded-lg transition-colors block text-center"
                   >
                     Free Quote
-                  </motion.button>
+                  </motion.a>
 
-                  <motion.button
+                  <motion.a
+                    href="https://wa.me/447469179470"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp</span>
-                  </motion.button>
+                  </motion.a>
                 </div>
               </motion.div>
             )}

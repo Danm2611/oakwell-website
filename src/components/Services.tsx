@@ -21,23 +21,20 @@ const Services: React.FC = () => {
       title: "Emergency Roof Repairs",
       description: "Rapid response for storm damage, leaks, and urgent repairs",
       highlight: "1-Hour Response Time",
-      price: "From £150",
       features: ["24/7 availability", "Emergency weatherproofing", "Insurance claim assistance"]
     },
     {
       icon: Home,
-      title: "Complete Re-Roofing", 
+      title: "Complete Re-Roofing",
       description: "Full roof replacement with premium materials and craftsmanship",
       highlight: "10 Year Warranty",
-      price: "From £5,500",
       features: ["Free detailed survey", "Premium materials", "Project management"]
     },
     {
       icon: Layers,
       title: "Flat Roof Specialists",
-      description: "EPDM, GRP, and modern flat roofing systems",
-      highlight: "EPDM & GRP Systems", 
-      price: "From £70/m²",
+      description: "Single ply PVC flat roof systems for long-lasting protection",
+      highlight: "Single Ply PVC Systems",
       features: ["20+ year lifespan", "Energy efficient", "Minimal maintenance"]
     },
     {
@@ -45,7 +42,6 @@ const Services: React.FC = () => {
       title: "Roof Inspections",
       description: "Comprehensive roof health checks and maintenance advice",
       highlight: "Free Survey & Quote",
-      price: "FREE",
       features: ["Drone surveys available", "Detailed report", "Maintenance plan"]
     },
     {
@@ -53,7 +49,6 @@ const Services: React.FC = () => {
       title: "Insurance Claims",
       description: "Full support for storm damage and insurance claims",
       highlight: "We Handle Everything",
-      price: "No upfront costs",
       features: ["Direct billing", "Claims management", "Restoration work"]
     },
     {
@@ -61,7 +56,6 @@ const Services: React.FC = () => {
       title: "Commercial Roofing",
       description: "Large-scale roofing for schools, offices, and warehouses",
       highlight: "Schools, Offices, Warehouses",
-      price: "Bespoke quotes",
       features: ["Project management", "Minimal disruption", "Health & safety"]
     }
   ];
@@ -167,11 +161,6 @@ const Services: React.FC = () => {
                   <span>{service.highlight}</span>
                 </div>
 
-                {/* Price */}
-                <div className="text-2xl font-bold text-oakwell-dark mb-4">
-                  {service.price}
-                </div>
-
                 {/* Features */}
                 <ul className="space-y-2 mb-6">
                   {service.features.map((feature, idx) => (
@@ -183,13 +172,14 @@ const Services: React.FC = () => {
                 </ul>
 
                 {/* CTA Button */}
-                <motion.button
+                <motion.a
+                  href="#contact"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-gradient-to-r from-oakwell-dark to-oakwell-medium text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-oakwell-dark to-oakwell-medium text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 block text-center"
                 >
                   Get Quote
-                </motion.button>
+                </motion.a>
               </div>
 
               {/* Hover Effect Corner */}
@@ -208,13 +198,14 @@ const Services: React.FC = () => {
           <p className="text-oakwell-light text-lg mb-6">
             Need a custom solution? We handle all types of roofing projects.
           </p>
-          <motion.button
+          <motion.a
+            href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-white text-oakwell-dark font-bold py-4 px-8 rounded-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white text-oakwell-dark font-bold py-4 px-8 rounded-lg hover:shadow-xl transition-all duration-300 inline-block"
           >
             Discuss Your Project
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

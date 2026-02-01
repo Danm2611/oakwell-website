@@ -257,22 +257,24 @@ const WhyChooseUs: React.FC = () => {
             for their roofing needs. Get your free inspection today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.button
+            <motion.a
+              href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary flex items-center justify-center space-x-2"
             >
               <Wrench className="w-5 h-5" />
               <span>Free Roof Inspection</span>
-            </motion.button>
-            <motion.button
+            </motion.a>
+            <motion.a
+              href="tel:07469179470"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="border-2 border-oakwell-dark text-oakwell-dark font-semibold py-3 px-8 rounded-lg hover:bg-oakwell-dark hover:text-white transition-all duration-300 flex items-center justify-center space-x-2"
             >
               <MapPin className="w-5 h-5" />
-              <span>Check Our Service Area</span>
-            </motion.button>
+              <span>Call Us Today</span>
+            </motion.a>
           </div>
         </motion.div>
       </div>

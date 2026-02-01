@@ -176,23 +176,25 @@ const StormDamage: React.FC = () => {
               transition={{ delay: 1.2 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <motion.button
+              <motion.a
+                href="tel:07469179470"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-emergency flex items-center justify-center space-x-2 flex-1"
               >
                 <Phone className="w-5 h-5" />
-                <span>Recent Storm?</span>
-              </motion.button>
-              
-              <motion.button
+                <span>Recent Storm? Call Now</span>
+              </motion.a>
+
+              <motion.a
+                href="tel:07469179470"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary flex items-center justify-center space-x-2 flex-1"
               >
                 <FileText className="w-5 h-5" />
                 <span>File Claim</span>
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             {/* Trust Indicator */}

@@ -25,16 +25,17 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Emergency Banner */}
-      <motion.div
+      <motion.a
+        href="tel:07469179470"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-red-600 text-white py-2 px-4 text-center font-semibold text-sm md:text-base"
+        className="block bg-red-600 text-white py-2 px-4 text-center font-semibold text-sm md:text-base hover:bg-red-700 transition-colors cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <Phone className="w-4 h-4 animate-pulse" />
           <span>Storm Damage? Call Now: 07469 179470 - 24/7 Emergency Service</span>
         </div>
-      </motion.div>
+      </motion.a>
 
       {/* Main Header */}
       <motion.header
@@ -98,21 +99,23 @@ const Header: React.FC = () => {
                 <Phone className="w-4 h-4" />
                 <span>Call Now: 07469 179470</span>
               </motion.a>
-              <motion.button
+              <motion.a
+                href="tel:07469179470"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-emergency flex items-center space-x-2 text-sm"
               >
                 <Phone className="w-4 h-4" />
                 <span>Emergency</span>
-              </motion.button>
-              <motion.button
+              </motion.a>
+              <motion.a
+                href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary text-sm"
               >
                 Free Quote
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -158,11 +161,11 @@ const Header: React.FC = () => {
                   <Phone className="w-4 h-4" />
                   <span>Call: 07469 179470</span>
                 </a>
-                <button className="btn-emergency flex items-center justify-center space-x-2">
+                <a href="tel:07469179470" className="btn-emergency flex items-center justify-center space-x-2">
                   <Phone className="w-4 h-4" />
                   <span>Emergency Call</span>
-                </button>
-                <button className="btn-primary">Free Quote</button>
+                </a>
+                <a href="#contact" className="btn-primary text-center" onClick={() => setIsMenuOpen(false)}>Free Quote</a>
               </div>
             </nav>
           </div>
