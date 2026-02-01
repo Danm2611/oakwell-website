@@ -29,7 +29,7 @@ const Header: React.FC = () => {
         href="tel:07469179470"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="block bg-red-600 text-white py-3 px-4 text-center font-semibold text-sm md:text-base hover:bg-red-700 transition-colors cursor-pointer"
+        className="block bg-red-600 text-white py-4 px-4 text-center font-semibold text-sm md:text-base hover:bg-red-700 transition-colors cursor-pointer"
       >
         <div className="flex items-center justify-center space-x-2">
           <Phone className="w-4 h-4 animate-pulse" />
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
         className={`fixed w-full z-50 transition-all duration-300 ${
           isScrolled ? 'bg-white shadow-lg py-2' : 'bg-white/95 backdrop-blur-sm py-4'
         }`}
-        style={{ top: '46px' }}
+        style={{ top: '54px' }}
       >
         <div className="section-container">
           <div className="flex items-center justify-between">
