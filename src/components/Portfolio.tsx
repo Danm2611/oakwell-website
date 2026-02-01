@@ -6,22 +6,22 @@ const Portfolio: React.FC = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const images = [
-    '/images/complex-slate-aerial.jpg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg',
-    '/images/terracotta-tile-roof.jpg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.10 (3).jpeg',
-    '/images/hip-roof-tiles.jpg',
-    '/images/flat-roof-skylight.jpg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.12 (3).jpeg',
-    '/images/tile-roof-dormer.jpg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.14 (2).jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.12 (1).jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.09 (1).jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.14 (3).jpeg',
-    '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
-    '/images/grp-flat-roof-extension.jpg',
+    { src: '/images/complex-slate-aerial.jpg', alt: 'Complex slate roof installation aerial view in West Yorkshire' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.10.jpeg', alt: 'Professional roofing work completed by Oakwell Roofing' },
+    { src: '/images/terracotta-tile-roof.jpg', alt: 'Terracotta tile roof replacement in Leeds' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.09.jpeg', alt: 'Quality roof repair work in Bradford' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.10 (3).jpeg', alt: 'Residential roofing project in Huddersfield' },
+    { src: '/images/hip-roof-tiles.jpg', alt: 'Hip roof tile installation with precision craftsmanship' },
+    { src: '/images/flat-roof-skylight.jpg', alt: 'Flat roof with skylight installation' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.12 (3).jpeg', alt: 'Expert roof restoration in Wakefield' },
+    { src: '/images/tile-roof-dormer.jpg', alt: 'Tile roof with dormer window installation' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.14 (2).jpeg', alt: 'Complete re-roofing project in Halifax' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg', alt: 'Professional lead flashing and detail work' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.12 (1).jpeg', alt: 'New roof installation with high-quality materials' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.09 (1).jpeg', alt: 'Scaffolding and roof replacement in progress' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.14 (3).jpeg', alt: 'Finished roofing project in Dewsbury' },
+    { src: '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg', alt: 'Quality slate roofing workmanship' },
+    { src: '/images/grp-flat-roof-extension.jpg', alt: 'GRP flat roof on home extension' },
   ];
 
   return (
@@ -58,8 +58,8 @@ const Portfolio: React.FC = () => {
               className="relative aspect-square overflow-hidden rounded-xl shadow-lg cursor-pointer group"
             >
               <img
-                src={image}
-                alt="Oakwell Roofing project"
+                src={image.src}
+                alt={image.alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-oakwell-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
