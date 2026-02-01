@@ -9,8 +9,7 @@ import {
   Shield,
   Award,
   FileText,
-  Clock,
-  Star
+  Clock
 } from 'lucide-react';
 
 const Footer: React.FC = () => {
