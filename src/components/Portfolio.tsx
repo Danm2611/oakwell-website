@@ -18,6 +18,8 @@ const Portfolio: React.FC = () => {
     '/images/WhatsApp Image 2025-04-07 at 22.33.14 (2).jpeg',
     '/images/WhatsApp Image 2025-04-07 at 22.33.13.jpeg',
     '/images/WhatsApp Image 2025-04-07 at 22.33.12 (1).jpeg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.09 (1).jpeg',
+    '/images/WhatsApp Image 2025-04-07 at 22.33.14 (3).jpeg',
     '/images/WhatsApp Image 2025-04-07 at 22.33.14.jpeg',
     '/images/grp-flat-roof-extension.jpg',
   ];
