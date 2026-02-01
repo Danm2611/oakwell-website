@@ -27,7 +27,7 @@ const Services: React.FC = () => {
       icon: Home,
       title: "Complete Re-Roofing",
       description: "Full roof replacement with premium materials and craftsmanship",
-      highlight: "10 Year Warranty",
+      highlight: "15 Year Warranty",
       features: ["Free detailed survey", "Premium materials", "Project management"]
     },
     {

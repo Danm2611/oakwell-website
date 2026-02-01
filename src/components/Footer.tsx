@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-oakwell-light" />
-                  <span className="text-sm">info@oakwellroofing.co.uk</span>
+                  <span className="text-sm">lewis@oakwellroofing.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-oakwell-light" />

@@ -55,7 +55,7 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: "info@oakwellroofing.co.uk",
+      details: "lewis@oakwellroofing.com",
       description: "We respond within 2 hours during business days"
     },
     {
