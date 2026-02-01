@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Clock, Award, Phone, Calendar } from 'lucide-react';
+import { Clock, Shield, Award, Phone, Calendar } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [rainDrops, setRainDrops] = useState<Array<{ id: number; left: number; delay: number }>>([]);
@@ -13,12 +13,6 @@ const Hero: React.FC = () => {
     }));
     setRainDrops(drops);
   }, []);
-
-  const trustBadges = [
-    { name: 'NFRC Member', icon: Shield },
-    { name: 'TrustMark', icon: Award },
-    { name: "Which? Trusted", icon: Shield },
-  ];
 
   return (
     <section className="relative h-screen overflow-hidden">
@@ -120,52 +114,9 @@ const Hero: React.FC = () => {
               </motion.a>
             </motion.div>
 
-            {/* Trust Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
-              className="flex flex-wrap items-center gap-6"
-            >
-              <span className="text-white/70 font-medium text-sm">Trusted by:</span>
-              {trustBadges.map((badge, index) => (
-                <motion.div
-                  key={badge.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.6 + index * 0.2 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20"
-                >
-                  <badge.icon className="w-4 h-4 text-oakwell-light" />
-                  <span className="text-white text-sm font-medium">{badge.name}</span>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 16, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-white/70 rounded-full mt-2"
-          />
-        </motion.div>
-        <p className="text-white/70 text-sm mt-2 text-center">Scroll to explore</p>
-      </motion.div>
     </section>
   );
 };
