@@ -9,20 +9,30 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
+import Privacy from './components/Privacy';
 
 function App() {
+  const path = typeof window !== 'undefined' ? window.location.pathname.replace(/\/+$/, '') : '';
+  const isPrivacy = path === '/privacy';
+
   return (
     <div className="App">
       <Header />
-      <Hero />
-      <Services />
-      <StormDamage />
-      <Portfolio />
-      <WhyChooseUs />
-      <Reviews />
-      <Contact />
+      {isPrivacy ? (
+        <Privacy />
+      ) : (
+        <main id="main">
+          <Hero />
+          <Services />
+          <StormDamage />
+          <Portfolio />
+          <WhyChooseUs />
+          <Reviews />
+          <Contact />
+        </main>
+      )}
       <Footer />
-      <FloatingCTA />
+      {!isPrivacy && <FloatingCTA />}
     </div>
   );
 }

@@ -1,370 +1,283 @@
-import React, { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  MessageCircle,
-  Upload,
-  Send,
-  CheckCircle
-} from 'lucide-react';
+import React, { useState } from 'react';
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send, CheckCircle, AlertTriangle } from 'lucide-react';
+
+type Status = 'idle' | 'sending' | 'sent' | 'error';
+
+const PHONE_DISPLAY = '07469 179470';
+const PHONE_HREF = 'tel:07469179470';
+const EMAIL = 'lewis@oakwellroofing.com';
+const WHATSAPP = 'https://wa.me/447469179470?text=Hi%20Oakwell%2C%20could%20you%20take%20a%20look%20at%20my%20roof%3F';
+
+const inputClass =
+  'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-oakwell-medium transition-colors';
 
 const Contact: React.FC = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    postcode: '',
-    service: '',
-    urgency: 'normal',
-    message: ''
-  });
+  const [status, setStatus] = useState<Status>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simulate form submission
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 3000);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: "24/7 Emergency Hotline",
-      details: "07469 179470",
-      description: "Available round the clock for emergency repairs"
-    },
-    {
-      icon: Phone,
-      title: "General Enquiries", 
-      details: "07469 179470",
-      description: "Monday - Friday: 8:00 AM - 6:00 PM"
-    },
-    {
-      icon: Mail,
-      title: "Email Us",
-      details: "lewis@oakwellroofing.com",
-      description: "We respond within 2 hours during business days"
-    },
-    {
-      icon: MapPin,
-      title: "Service Area",
-      details: "West Yorkshire",
-      description: "Leeds, Bradford, Wakefield, Huddersfield & surrounding areas"
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setStatus('sending');
+    try {
+      const res = await fetch('/', { method: 'POST', body: data });
+      if (!res.ok) throw new Error(`Form post failed: ${res.status}`);
+      setStatus('sent');
+      form.reset();
+    } catch {
+      setStatus('error');
     }
-  ];
+  };
 
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="section-container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Get Your Free Quote Today
-          </h2>
+        <div className="text-center mb-14">
+          <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-5">Get a free quote</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Need a roofing expert? Contact us for emergency repairs, free inspections, 
-            or project consultations. We're here to help 24/7.
+            Tell us a bit about the roof and we'll get back to you to arrange a visit. Or just call.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="bg-white rounded-2xl p-8 shadow-xl"
-          >
-            <h3 className="font-heading text-2xl font-bold text-gray-900 mb-6">
-              Send Us Your Details
-            </h3>
+          <div className="bg-white rounded-2xl p-8 shadow-xl">
+            <h3 className="font-heading text-2xl font-bold text-gray-900 mb-6">Send us your details</h3>
 
-            {formSubmitted ? (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="text-center py-12"
-              >
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                  Message Sent Successfully!
-                </h4>
-                <p className="text-gray-600">
-                  We'll get back to you within 2 hours during business hours.
+            {status === 'sent' ? (
+              <div className="text-center py-12" role="status">
+                <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" aria-hidden="true" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Thanks, we've got your enquiry</h4>
+                <p className="text-gray-600 mb-6">
+                  We'll be in touch to arrange a time to look at the roof. If it's urgent, call{' '}
+                  <a href={PHONE_HREF} className="text-oakwell-dark font-semibold">{PHONE_DISPLAY}</a>.
                 </p>
-              </motion.div>
+                <button type="button" onClick={() => setStatus('idle')} className="text-oakwell-dark underline">
+                  Send another enquiry
+                </button>
+              </div>
             ) : (
               <form
                 name="contact"
                 method="POST"
+                action="/"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
+                encType="multipart/form-data"
                 onSubmit={handleSubmit}
                 className="space-y-6"
+                noValidate={false}
               >
                 <input type="hidden" name="form-name" value="contact" />
-                <p className="hidden">
+                <p className="hidden" aria-hidden="true">
                   <label>
-                    Don't fill this out if you're human: <input name="bot-field" />
+                    Leave this field empty: <input name="bot-field" tabIndex={-1} autoComplete="off" />
                   </label>
                 </p>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Full Name *
+                    <label htmlFor="contact-name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full name <span aria-hidden="true">*</span>
                     </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                      placeholder="Your full name"
-                    />
+                    <input id="contact-name" type="text" name="name" required autoComplete="name" className={inputClass} />
                   </div>
-                  
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Phone Number *
+                    <label htmlFor="contact-phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone number <span aria-hidden="true">*</span>
                     </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                      placeholder="Your phone number"
-                    />
+                    <input id="contact-phone" type="tel" name="phone" required autoComplete="tel" className={inputClass} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address
+                    <label htmlFor="contact-email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email address
                     </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                      placeholder="your.email@example.com"
-                    />
+                    <input id="contact-email" type="email" name="email" autoComplete="email" className={inputClass} />
                   </div>
-                  
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Postcode *
+                    <label htmlFor="contact-postcode" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Postcode <span aria-hidden="true">*</span>
                     </label>
                     <input
+                      id="contact-postcode"
                       type="text"
                       name="postcode"
                       required
-                      value={formData.postcode}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                      placeholder="e.g. LS1 1AA"
+                      autoComplete="postal-code"
+                      placeholder="e.g. LS27 0AA"
+                      className={inputClass}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Service Needed
+                  <label htmlFor="contact-service" className="block text-sm font-semibold text-gray-700 mb-2">
+                    What do you need?
                   </label>
-                  <select
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="emergency">Emergency Repair</option>
-                    <option value="inspection">Free Inspection</option>
-                    <option value="reroofing">Complete Re-roofing</option>
-                    <option value="flat-roof">Flat Roof Specialist</option>
-                    <option value="insurance">Insurance Claim</option>
-                    <option value="commercial">Commercial Roofing</option>
+                  <select id="contact-service" name="service" className={inputClass} defaultValue="">
+                    <option value="">Choose one (optional)</option>
+                    <option value="repair">Roof repair</option>
+                    <option value="reroof">Re-roof / new roof</option>
+                    <option value="flat-roof">Flat roof</option>
+                    <option value="chimney-leadwork">Chimney or leadwork</option>
+                    <option value="survey">Roof survey</option>
+                    <option value="insurance">Storm damage / insurance claim</option>
+                    <option value="new-build">New build / commercial</option>
+                    <option value="other">Something else</option>
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Urgency Level
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['normal', 'urgent', 'emergency'].map((level) => (
-                      <label key={level} className="flex items-center">
-                        <input
-                          type="radio"
-                          name="urgency"
-                          value={level}
-                          checked={formData.urgency === level}
-                          onChange={handleInputChange}
-                          className="mr-2"
-                        />
-                        <span className={`text-sm font-medium ${
-                          level === 'emergency' ? 'text-red-600' :
-                          level === 'urgent' ? 'text-orange-600' : 'text-green-600'
-                        }`}>
-                          {level.charAt(0).toUpperCase() + level.slice(1)}
-                        </span>
+                <fieldset>
+                  <legend className="block text-sm font-semibold text-gray-700 mb-2">How urgent is it?</legend>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {[
+                      { value: 'normal', label: 'No rush', cls: 'text-gray-700' },
+                      { value: 'soon', label: 'This week if possible', cls: 'text-gray-700' },
+                      { value: 'emergency', label: 'Water coming in', cls: 'text-red-700' },
+                    ].map((opt) => (
+                      <label key={opt.value} className="flex items-center gap-2">
+                        <input type="radio" name="urgency" value={opt.value} defaultChecked={opt.value === 'normal'} />
+                        <span className={`text-sm font-medium ${opt.cls}`}>{opt.label}</span>
                       </label>
                     ))}
                   </div>
-                </div>
+                </fieldset>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Message
+                  <label htmlFor="contact-message" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Tell us about the roof
                   </label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     rows={4}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oakwell-medium focus:border-transparent transition-all duration-300"
-                    placeholder="Describe your roofing needs or any damage..."
+                    className={inputClass}
+                    placeholder="What's the problem, what type of roof is it, and when did you notice it?"
                   />
                 </div>
 
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                  <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-600">Upload damage photos (optional)</p>
-                  <p className="text-sm text-gray-500">Drag & drop or click to browse</p>
+                <div>
+                  <label htmlFor="contact-photo" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Add a photo (optional, up to 8 MB)
+                  </label>
+                  <input
+                    id="contact-photo"
+                    type="file"
+                    name="photo"
+                    accept="image/*"
+                    className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-oakwell-light/40 file:text-oakwell-dark file:font-semibold"
+                  />
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <div className="flex items-start gap-3">
+                  <input id="contact-consent" type="checkbox" name="consent" value="yes" required className="mt-1" />
+                  <label htmlFor="contact-consent" className="text-sm text-gray-700">
+                    I'm happy for Oakwell Roofing Ltd to use these details to reply to my enquiry. See our{' '}
+                    <a href="/privacy" className="text-oakwell-dark underline">privacy policy</a>.
+                  </label>
+                </div>
+
+                {status === 'error' && (
+                  <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-800 rounded-lg p-4" role="alert">
+                    <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                    <p className="text-sm">
+                      Sorry, that didn't send. Please try again, or call{' '}
+                      <a href={PHONE_HREF} className="font-semibold underline">{PHONE_DISPLAY}</a> or email{' '}
+                      <a href={`mailto:${EMAIL}`} className="font-semibold underline">{EMAIL}</a>.
+                    </p>
+                  </div>
+                )}
+
+                <button
                   type="submit"
-                  className="w-full btn-primary flex items-center justify-center space-x-2 py-4"
+                  disabled={status === 'sending'}
+                  className="w-full btn-primary inline-flex items-center justify-center gap-2 py-4 disabled:opacity-60 disabled:cursor-wait"
                 >
-                  <Send className="w-5 h-5" />
-                  <span>Send Message</span>
-                </motion.button>
+                  <Send className="w-5 h-5" aria-hidden="true" />
+                  <span>{status === 'sending' ? 'Sending…' : 'Send enquiry'}</span>
+                </button>
               </form>
             )}
-          </motion.div>
+          </div>
 
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
-          >
-            {/* Emergency Contact */}
-            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 text-white">
-              <h3 className="font-heading text-2xl font-bold mb-4">
-                Emergency? Call Now!
-              </h3>
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <Phone className="w-6 h-6" />
+          <div className="space-y-6">
+            <div className="bg-oakwell-dark rounded-2xl p-8 text-white">
+              <h3 className="font-heading text-2xl font-bold mb-4">Prefer to talk?</h3>
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 bg-white/15 rounded-full flex items-center justify-center">
+                  <Phone className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <div>
-                  <a href="tel:07469179470" className="text-2xl font-bold hover:text-red-200 transition-colors">07469 179470</a>
-                  <div className="text-red-100">Available 24/7</div>
+                  <a href={PHONE_HREF} className="text-2xl font-bold hover:text-oakwell-light transition-colors">
+                    {PHONE_DISPLAY}
+                  </a>
+                  <div className="text-oakwell-light">Lewis, Oakwell Roofing</div>
                 </div>
               </div>
-              <p className="text-red-100">
-                Storm damage, leaks, or urgent repairs? Our emergency team is ready to help.
+              <p className="text-white/85">
+                Water coming in? Call rather than email and we'll get to you as quickly as we can.
               </p>
             </div>
 
-            {/* WhatsApp Quick Contact */}
-            <div className="bg-green-500 rounded-2xl p-6 text-white">
-              <div className="flex items-center space-x-4">
-                <MessageCircle className="w-8 h-8" />
+            <a
+              href={WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-green-700 hover:bg-green-800 rounded-2xl p-6 text-white transition-colors"
+            >
+              <div className="flex items-center gap-4">
+                <MessageCircle className="w-8 h-8" aria-hidden="true" />
                 <div>
-                  <div className="font-bold">WhatsApp Quick Photos</div>
-                  <div className="text-green-100">Send photos instantly for quick assessment</div>
+                  <div className="font-bold">Send photos on WhatsApp</div>
+                  <div className="text-green-100">Quickest way to get a first opinion</div>
+                </div>
+              </div>
+            </a>
+
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-oakwell-light/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-6 h-6 text-oakwell-dark" aria-hidden="true" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+                  <a href={`mailto:${EMAIL}`} className="text-oakwell-dark font-bold hover:text-oakwell-medium transition-colors break-all">
+                    {EMAIL}
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Contact Information Cards */}
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-oakwell-light rounded-lg flex items-center justify-center">
-                      <info.icon className="w-6 h-6 text-oakwell-dark" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">{info.title}</h4>
-                      <div className="text-oakwell-dark font-bold mb-1">
-                        {info.title.includes('Phone') || info.title.includes('Hotline') || info.title.includes('Enquiries') ? (
-                          <a href={`tel:${info.details.replace(/\s/g, '')}`} className="hover:text-oakwell-medium transition-colors">
-                            {info.details}
-                          </a>
-                        ) : (
-                          info.details
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-sm">{info.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-oakwell-light/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-oakwell-dark" aria-hidden="true" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1">Where we work</h4>
+                  <p className="text-oakwell-dark font-bold mb-1">Morley, Leeds and across West Yorkshire</p>
+                  <p className="text-gray-600 text-sm">Leeds, Bradford, Wakefield, Huddersfield, Halifax, Dewsbury and nearby.</p>
+                </div>
+              </div>
             </div>
 
-            {/* Office Hours */}
-            <div className="bg-oakwell-dark rounded-xl p-6 text-white">
-              <div className="flex items-center space-x-3 mb-4">
-                <Clock className="w-6 h-6 text-oakwell-light" />
-                <h4 className="font-semibold text-lg">Office Hours</h4>
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <Clock className="w-6 h-6 text-oakwell-dark" aria-hidden="true" />
+                <h4 className="font-semibold text-lg text-gray-900">Phone hours</h4>
               </div>
-              <div className="space-y-2 text-oakwell-light">
-                <div className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span>8:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span>9:00 AM - 4:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday:</span>
-                  <span>Emergency only</span>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-oakwell-medium/30">
-                <p className="text-sm text-oakwell-light">
-                  Out-of-hours emergency service available with additional charges
-                </p>
-              </div>
+              <dl className="space-y-2 text-gray-700">
+                <div className="flex justify-between"><dt>Monday to Friday</dt><dd>8:00am to 6:00pm</dd></div>
+                <div className="flex justify-between"><dt>Saturday</dt><dd>9:00am to 4:00pm</dd></div>
+                <div className="flex justify-between"><dt>Sunday</dt><dd>Emergencies only</dd></div>
+              </dl>
+              <p className="text-sm text-gray-500 mt-4 pt-4 border-t border-gray-100">
+                Out-of-hours emergency call-outs may carry an additional charge. We'll tell you before we come out.
+              </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

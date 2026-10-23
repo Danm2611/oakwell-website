@@ -37,9 +37,11 @@ const FloatingCTA: React.FC = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">Need Help?</h3>
-                    <p className="text-gray-600 text-sm">Get a free quote today</p>
+                    <p className="text-gray-600 text-sm">Call, message or request a quote</p>
                   </div>
                   <button
+                    type="button"
+                    aria-label="Close"
                     onClick={() => setIsExpanded(false)}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
                   >
@@ -52,10 +54,10 @@ const FloatingCTA: React.FC = () => {
                     href="tel:07469179470"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
+                    className="w-full bg-red-700 hover:bg-red-800 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
-                    <span>Emergency: 07469 179470</span>
+                    <span>Call 07469 179470</span>
                   </motion.a>
 
                   <motion.a
@@ -73,7 +75,7 @@ const FloatingCTA: React.FC = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
+                    className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp</span>
@@ -88,6 +90,8 @@ const FloatingCTA: React.FC = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsExpanded(!isExpanded)}
+            aria-label={isExpanded ? 'Close contact options' : 'Contact options'}
+            aria-expanded={isExpanded}
             className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
               isExpanded 
                 ? 'bg-gray-600 hover:bg-gray-700' 

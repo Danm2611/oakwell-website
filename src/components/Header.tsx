@@ -1,176 +1,142 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Phone, Menu, X } from 'lucide-react';
+
+const PHONE_DISPLAY = '07469 179470';
+const PHONE_HREF = 'tel:07469179470';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navItems = [
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'About', href: '#about' },
-    { name: 'Areas', href: '#areas' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Our work', href: '/#portfolio' },
+    { name: 'Reviews', href: '/#reviews' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
     <>
-      {/* Emergency Banner */}
-      <motion.a
-        href="tel:07469179470"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="block bg-red-600 text-white py-4 px-4 text-center font-semibold text-sm md:text-base hover:bg-red-700 transition-colors cursor-pointer"
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] bg-white text-oakwell-dark px-4 py-2 rounded"
       >
-        <div className="flex items-center justify-center space-x-2">
-          <Phone className="w-4 h-4 animate-pulse" />
-          <span>Storm Damage? Call Now: 07469 179470 - 24/7 Emergency Service</span>
-        </div>
-      </motion.a>
+        Skip to content
+      </a>
 
-      {/* Main Header */}
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.2 }}
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-lg py-2' : 'bg-white/95 backdrop-blur-sm py-4'
+      {/* Emergency banner */}
+      <a
+        href={PHONE_HREF}
+        className="block bg-red-700 text-white py-3 px-4 text-center font-semibold text-sm md:text-base hover:bg-red-800 transition-colors"
+      >
+        <span className="inline-flex items-center gap-2">
+          <Phone className="w-4 h-4" aria-hidden="true" />
+          <span>Roof emergency? Call {PHONE_DISPLAY}</span>
+        </span>
+      </a>
+
+      <header
+        className={`sticky top-0 w-full z-50 bg-white transition-shadow duration-300 ${
+          isScrolled ? 'shadow-lg' : 'border-b border-gray-100'
         }`}
-        style={{ top: '54px' }}
       >
         <div className="section-container">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center space-x-3"
-            >
-              <img 
-                src="/images/oakwell_logo.png" 
-                alt="Oakwell Roofing" 
-                className={`transition-all duration-300 ${
-                  isScrolled ? 'h-12' : 'h-16'
-                }`}
+          <div className="flex items-center justify-between gap-4 py-3">
+            <a href="/" className="flex items-center gap-3 min-w-0">
+              <img
+                src="/images/oakwell_logo.png"
+                alt=""
+                width={64}
+                height={64}
+                className={`transition-all duration-300 ${isScrolled ? 'h-10 w-10' : 'h-14 w-14'}`}
               />
-              <div>
-                <h1 className="font-heading text-xl md:text-2xl font-bold text-oakwell-dark">
+              <span className="min-w-0">
+                <span className="block font-heading text-lg md:text-xl font-bold text-oakwell-dark leading-tight">
                   Oakwell Roofing
-                </h1>
-                <p className="text-xs md:text-sm text-gray-600 font-medium">
-                  Protecting Yorkshire Homes Since 1995
-                </p>
-              </div>
-            </motion.div>
+                </span>
+                <span className="block text-xs text-gray-600 font-medium">Morley, Leeds</span>
+              </span>
+            </a>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item, index) => (
-                <motion.a
+            <nav className="hidden lg:flex items-center gap-7" aria-label="Main">
+              {navItems.map((item) => (
+                <a
                   key={item.name}
                   href={item.href}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
                   className="text-gray-700 hover:text-oakwell-dark font-medium transition-colors duration-300 relative group"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-oakwell-dark transition-all duration-300 group-hover:w-full"></span>
-                </motion.a>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-oakwell-dark transition-all duration-300 group-hover:w-full" />
+                </a>
               ))}
             </nav>
 
-            {/* CTA Buttons */}
-            <div className="hidden md:flex items-center space-x-3">
-              <motion.a
-                href="tel:07469179470"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-oakwell-dark hover:text-oakwell-medium font-semibold flex items-center space-x-2 text-sm border border-oakwell-dark rounded-lg px-4 py-2 hover:bg-oakwell-light/10 transition-all duration-300"
+            <div className="hidden md:flex items-center gap-3 shrink-0">
+              <a
+                href={PHONE_HREF}
+                className="text-oakwell-dark hover:text-oakwell-medium font-semibold inline-flex items-center gap-2 text-sm border border-oakwell-dark rounded-lg px-4 py-2 transition-colors whitespace-nowrap"
               >
-                <Phone className="w-4 h-4" />
-                <span>Call Now: 07469 179470</span>
-              </motion.a>
-              <motion.a
-                href="tel:07469179470"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-emergency flex items-center space-x-2 text-sm"
-              >
-                <Phone className="w-4 h-4" />
-                <span>Emergency</span>
-              </motion.a>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary text-sm"
-              >
-                Free Quote
-              </motion.a>
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                <span>{PHONE_DISPLAY}</span>
+              </a>
+              <a href="/#contact" className="btn-primary text-sm whitespace-nowrap">
+                Free quote
+              </a>
             </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <button
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </motion.button>
+              {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isMenuOpen ? 'auto' : 0,
-            opacity: isMenuOpen ? 1 : 0,
-          }}
-          className="lg:hidden overflow-hidden bg-white border-t"
+        <div
+          id="mobile-menu"
+          className={`lg:hidden overflow-hidden bg-white border-t transition-all duration-300 ${
+            isMenuOpen ? 'max-h-[480px]' : 'max-h-0'
+          }`}
         >
           <div className="section-container py-4">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item, index) => (
-                <motion.a
+            <nav className="flex flex-col gap-4" aria-label="Mobile">
+              {navItems.map((item) => (
+                <a
                   key={item.name}
                   href={item.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: isMenuOpen ? 1 : 0, x: isMenuOpen ? 0 : -20 }}
-                  transition={{ delay: index * 0.1 }}
                   className="text-gray-700 hover:text-oakwell-dark font-medium py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
-                </motion.a>
+                </a>
               ))}
-              <div className="flex flex-col space-y-2 pt-4">
-                <a 
-                  href="tel:07469179470"
-                  className="text-oakwell-dark border border-oakwell-dark font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2"
+              <div className="flex flex-col gap-2 pt-4">
+                <a
+                  href={PHONE_HREF}
+                  className="text-oakwell-dark border border-oakwell-dark font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2"
                 >
-                  <Phone className="w-4 h-4" />
-                  <span>Call: 07469 179470</span>
+                  <Phone className="w-4 h-4" aria-hidden="true" />
+                  <span>Call {PHONE_DISPLAY}</span>
                 </a>
-                <a href="tel:07469179470" className="btn-emergency flex items-center justify-center space-x-2">
-                  <Phone className="w-4 h-4" />
-                  <span>Emergency Call</span>
+                <a href="/#contact" className="btn-primary text-center" onClick={() => setIsMenuOpen(false)}>
+                  Free quote
                 </a>
-                <a href="#contact" className="btn-primary text-center" onClick={() => setIsMenuOpen(false)}>Free Quote</a>
               </div>
             </nav>
           </div>
-        </motion.div>
-      </motion.header>
+        </div>
+      </header>
     </>
   );
 };

@@ -1,119 +1,82 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Shield, Award, Phone, Calendar } from 'lucide-react';
+import { MapPin, ClipboardCheck, Phone, Calendar } from 'lucide-react';
 
 const Hero: React.FC = () => {
-  const [rainDrops, setRainDrops] = useState<Array<{ id: number; left: number; delay: number }>>([]);
-
-  useEffect(() => {
-    const drops = Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      delay: Math.random() * 2,
-    }));
-    setRainDrops(drops);
-  }, []);
-
   return (
-    <section className="relative h-screen overflow-hidden">
-      {/* Image Background */}
+    <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
           src="/images/complex-slate-aerial.jpg"
-          alt="Professional slate roofing by Oakwell Roofing"
+          alt="Aerial view of a new slate roof fitted by Oakwell Roofing"
           className="w-full h-full object-cover"
+          width={2048}
+          height={1152}
+          {...({ fetchpriority: 'high' } as Record<string, string>)}
         />
-
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30" />
       </div>
 
-      {/* Animated Rain Effect */}
-      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        {rainDrops.map((drop) => (
-          <motion.div
-            key={drop.id}
-            className="rain-drop"
-            style={{ left: `${drop.left}%` }}
-            initial={{ y: '-100vh', opacity: 0 }}
-            animate={{ y: '100vh', opacity: [0, 1, 0] }}
-            transition={{
-              duration: 2,
-              delay: drop.delay,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="relative z-20 h-full flex items-center">
-        <div className="section-container pt-20 md:pt-24">
-          <div className="max-w-4xl">
-            {/* Main Headline */}
+      <div className="relative z-10 w-full">
+        <div className="section-container py-20 md:py-28">
+          <div className="max-w-3xl">
             <motion.h1
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+              transition={{ duration: 0.6 }}
+              className="font-heading text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
             >
-              West Yorkshire's Most{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-oakwell-light to-oakwell-medium">
-                Trusted
-              </span>{' '}
-              Roofing Specialists
+              Slate, tile and flat roofing across West Yorkshire
             </motion.h1>
 
-            {/* Subheading */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap items-center gap-4 md:gap-8 text-white/90 text-lg md:text-xl mb-8"
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl"
             >
-              <div className="flex items-center space-x-2">
-                <Clock className="w-5 h-5 text-oakwell-light" />
-                <span>24/7 Emergency Response</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-oakwell-light" />
-                <span>Insurance Approved</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Award className="w-5 h-5 text-oakwell-light" />
-                <span>25 Year Guarantee</span>
-              </div>
+              Re-roofs, repairs, flat roofs, chimneys and leadwork for homes and new builds.
+              Free, no-obligation quotes.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="flex flex-wrap items-center gap-x-8 gap-y-3 text-white/90 text-base md:text-lg mb-8"
+            >
+              <span className="inline-flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-oakwell-light" aria-hidden="true" />
+                Based in Morley, Leeds
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <ClipboardCheck className="w-5 h-5 text-oakwell-light" aria-hidden="true" />
+                Free surveys and written quotes
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Phone className="w-5 h-5 text-oakwell-light" aria-hidden="true" />
+                Emergency call-outs
+              </span>
             </motion.div>
 
-            {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-col sm:flex-row gap-4 mb-12"
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="flex flex-col sm:flex-row gap-4"
             >
-              <motion.a
+              <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-3 text-lg px-8 py-4">
+                <Calendar className="w-5 h-5" aria-hidden="true" />
+                <span>Get a free quote</span>
+              </a>
+              <a
                 href="tel:07469179470"
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(239, 68, 68, 0.4)' }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-emergency flex items-center justify-center space-x-3 text-lg px-8 py-4"
+                className="inline-flex items-center justify-center gap-3 text-lg px-8 py-4 rounded-lg font-semibold bg-white/10 text-white border border-white/40 hover:bg-white/20 transition-colors"
               >
-                <Phone className="w-5 h-5" />
-                <span>Get Emergency Help</span>
-              </motion.a>
-
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(27, 94, 145, 0.4)' }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary flex items-center justify-center space-x-3 text-lg px-8 py-4"
-              >
-                <Calendar className="w-5 h-5" />
-                <span>Free Roof Inspection</span>
-              </motion.a>
+                <Phone className="w-5 h-5" aria-hidden="true" />
+                <span>Call 07469 179470</span>
+              </a>
             </motion.div>
-
           </div>
         </div>
       </div>

@@ -1,20 +1,12 @@
 {
   "short_name": "Oakwell Roofing",
-  "name": "Oakwell Roofing - West Yorkshire Roofers",
+  "name": "Oakwell Roofing Ltd",
   "icons": [
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
+    { "src": "logo192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "logo512.png", "type": "image/png", "sizes": "512x512" }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#1B5E91",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#1B4F7A",
   "background_color": "#ffffff"
 }
