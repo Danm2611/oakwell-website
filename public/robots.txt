@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /thank-you/
+Disallow: /brand/
 
-Sitemap: https://oakwellroofing.com/sitemap.xml
+Sitemap: https://oakwellroofing.com/sitemap-index.xml

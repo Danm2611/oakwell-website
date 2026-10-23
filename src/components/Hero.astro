@@ -1,0 +1,136 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { photo } from '@/lib/photos';
+import { site } from '@/data/site';
+
+const hero = photo('hero-slate-new-build.jpg');
+---
+
+<section class="relative isolate overflow-hidden bg-ink text-white">
+  <div class="absolute inset-0 -z-20">
+    <Picture
+      src={hero}
+      alt=""
+      widths={[640, 960, 1280, 1920, 2400]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="h-full w-full object-cover object-[60%_40%]"
+      pictureAttributes={{ class: 'block h-full w-full' }}
+    />
+  </div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/15"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink/70 to-transparent"></div>
+
+  <!-- Yorkshire weather. Sparse, slow drizzle on canvas. Off under reduced-motion or data saver. -->
+  <canvas class="pointer-events-none absolute inset-0 -z-[5] h-full w-full opacity-0 transition-opacity duration-[2500ms]" data-rain aria-hidden="true"></canvas>
+
+  <div class="container-x relative flex min-h-[620px] flex-col justify-end py-16 md:min-h-[700px] md:py-24 lg:min-h-[78vh]">
+    <p class="eyebrow mb-5 text-blue-300">{site.tagline}</p>
+    <h1 class="max-w-[13ch] text-display text-white">
+      Roofs built for Yorkshire weather.
+    </h1>
+    <p class="mt-6 max-w-[52ch] text-lg text-white/85 md:text-xl">
+      Slate, tile and flat roofing, chimneys and leadwork for homes and new builds across West Yorkshire.
+      {site.experienceYears} years on the tools. A 25-year guarantee on every new roof.
+    </p>
+
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <a href={site.phoneHref} class="btn-primary !px-7 !py-4 !text-base">
+        <Icon name="phone" class="h-5 w-5" />
+        Call {site.phoneDisplay}
+      </a>
+      <a href={site.whatsappHref} target="_blank" rel="noopener" class="btn-outline-light !px-7 !py-4 !text-base">
+        <Icon name="whatsapp" class="h-5 w-5" />
+        Send a photo on WhatsApp
+      </a>
+      <a href="/contact/" class="font-display font-semibold text-white/90 underline-offset-4 hover:underline sm:ml-3">
+        or request a written quote
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-rain]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+
+  if (canvas && !reduce && !saveData) {
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      type Drop = { x: number; y: number; z: number; len: number; speed: number; alpha: number };
+      let w = 0;
+      let h = 0;
+      let drops: Drop[] = [];
+      let raf = 0;
+      let running = false;
+      const WIND = 0.14; // slight drift from the west
+
+      const make = (fresh = false): Drop => {
+        const z = 0.35 + Math.random() * 0.65;
+        return {
+          x: Math.random() * (w + 60) - 30,
+          y: fresh ? -30 - Math.random() * h * 0.5 : Math.random() * h,
+          z,
+          len: 9 + z * 15,
+          speed: 4.5 + z * 7,
+          alpha: 0.07 + z * 0.16,
+        };
+      };
+
+      const size = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth;
+        h = canvas.clientHeight;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.min(140, Math.round((w * h) / 13000));
+        drops = Array.from({ length: count }, () => make());
+      };
+
+      const draw = () => {
+        ctx.clearRect(0, 0, w, h);
+        ctx.lineCap = 'round';
+        for (const d of drops) {
+          ctx.strokeStyle = `rgba(214, 232, 244, ${d.alpha})`;
+          ctx.lineWidth = d.z > 0.8 ? 1.15 : 0.8;
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d.x - d.len * WIND, d.y + d.len);
+          ctx.stroke();
+          d.y += d.speed;
+          d.x -= d.speed * WIND;
+          if (d.y > h + 30) Object.assign(d, make(true));
+        }
+        raf = requestAnimationFrame(draw);
+      };
+
+      const start = () => {
+        if (running) return;
+        running = true;
+        raf = requestAnimationFrame(draw);
+      };
+      const stop = () => {
+        running = false;
+        cancelAnimationFrame(raf);
+      };
+
+      size();
+      canvas.style.opacity = '1';
+      start();
+
+      let resizeTimer = 0;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(size, 150);
+      });
+      document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+      new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(canvas);
+    }
+  }
+</script>

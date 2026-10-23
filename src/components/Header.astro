@@ -1,0 +1,117 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { site, nav } from '@/data/site';
+
+const current = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
+---
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-navy focus:shadow-soft">
+  Skip to content
+</a>
+
+<div class="bg-ink text-white/85 text-[13.5px]">
+  <div class="container-x flex h-9 items-center justify-between gap-4">
+    <p class="truncate">
+      <span class="font-semibold text-white">{site.emergency}.</span>
+      <span class="hidden sm:inline"> Water coming in? Call us any time.</span>
+    </p>
+    <a href={site.phoneHref} class="inline-flex shrink-0 items-center gap-1.5 font-display font-semibold text-white hover:text-blue-300">
+      <Icon name="phone" class="h-3.5 w-3.5" />
+      {site.phoneDisplay}
+    </a>
+  </div>
+</div>
+
+<header class="sticky top-0 z-50 border-b border-stone-200/70 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/92" data-header>
+  <div class="container-x flex h-[72px] items-center justify-between gap-6">
+    <a href="/" class="text-[44px] leading-none" aria-label="Oakwell Roofing, home">
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Main">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'font-display text-[15px] font-semibold text-navy/80 transition-colors hover:text-navy',
+            isActive(item.href) && 'text-terracotta',
+          ]}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden items-center gap-2.5 md:flex">
+      <a href={site.whatsappHref} target="_blank" rel="noopener" class="btn-outline !px-4" aria-label="Message us on WhatsApp">
+        <Icon name="whatsapp" class="h-4.5 w-4.5" />
+        <span class="hidden xl:inline">WhatsApp</span>
+      </a>
+      <a href={site.phoneHref} class="btn-outline !px-4">
+        <Icon name="phone" class="h-4 w-4" />
+        {site.phoneDisplay}
+      </a>
+      <a href="/contact/" class="btn-primary">Get a quote</a>
+    </div>
+
+    <button
+      type="button"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-md text-navy hover:bg-navy-100 lg:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-menu-toggle
+    >
+      <Icon name="menu" class="h-6 w-6" data-icon-open />
+      <Icon name="close" class="hidden h-6 w-6" data-icon-close />
+    </button>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-stone-200 bg-white lg:hidden" data-mobile-nav>
+    <nav class="container-x flex flex-col py-3" aria-label="Mobile">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['border-b border-stone-200/70 py-3.5 font-display text-lg font-semibold text-navy', isActive(item.href) && 'text-terracotta']}
+        >
+          {item.label}
+        </a>
+      ))}
+      <div class="grid grid-cols-2 gap-3 py-4">
+        <a href={site.phoneHref} class="btn-secondary">
+          <Icon name="phone" class="h-4 w-4" />
+          Call
+        </a>
+        <a href={site.whatsappHref} target="_blank" rel="noopener" class="btn-whatsapp">
+          <Icon name="whatsapp" class="h-4 w-4" />
+          WhatsApp
+        </a>
+        <a href="/contact/" class="btn-primary col-span-2">Get a quote</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-nav]');
+  const iconOpen = toggle?.querySelector('[data-icon-open]');
+  const iconClose = toggle?.querySelector('[data-icon-close]');
+  if (toggle && panel) {
+    const set = (open: boolean) => {
+      panel.hidden = !open;
+      panel.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+    };
+    toggle.addEventListener('click', () => set(panel.classList.contains('hidden')));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.classList.contains('hidden')) set(false);
+    });
+  }
+</script>

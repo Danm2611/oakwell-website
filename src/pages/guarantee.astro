@@ -1,0 +1,69 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import { site } from '@/data/site';
+---
+
+<Base
+  title="Our Guarantee | 25 Years on New Roofs | Oakwell Roofing"
+  description="Oakwell Roofing's workmanship guarantee: 25 years on new roofs and flat roofs, 15 years on reclaimed re-roofs, 1 year on repairs. In writing, from Oakwell Roofing Ltd. Not insurance-backed."
+  breadcrumbs={[{ name: 'Our guarantee', href: '/guarantee/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="Our guarantee"
+      title="What we guarantee, in plain English"
+      intro="Every job gets a written workmanship guarantee from Oakwell Roofing Ltd. Here is exactly what that means."
+      image="slate-effect-texture.jpg"
+      imageAlt="Close-up of slate-effect roof tiles"
+      crumbs={[{ name: 'Our guarantee', href: '/guarantee/' }]}
+    />
+
+    <section class="py-16 md:py-20">
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <h2 class="text-h2">Guarantee periods</h2>
+          <div class="mt-6 overflow-hidden rounded-lg border border-stone-200 bg-white">
+            <table class="w-full text-[15.5px]">
+              <thead class="bg-limewash font-display text-xs uppercase tracking-[0.12em] text-stone">
+                <tr><th class="px-5 py-3 text-left">Work</th><th class="px-5 py-3 text-right">Guarantee</th></tr>
+              </thead>
+              <tbody class="divide-y divide-stone-200">
+                {site.guarantees.map((g) => (
+                  <tr>
+                    <td class="px-5 py-3.5">{g.work}</td>
+                    <td class="px-5 py-3.5 text-right font-display font-bold text-navy tabular-nums">{g.years} {g.years === 1 ? 'year' : 'years'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-4 text-sm text-stone">{site.guaranteeNote}</p>
+        </div>
+        <div class="prose-oak lg:col-span-7">
+          <h2 class="!mt-0">What it covers</h2>
+          <p>
+            Our guarantee covers our workmanship: the way the roof was built. If a slate slips because it was not fixed properly, if a flat roof lifts at a joint we made, if lead we fitted lets water in, we come back and put it right at no cost to you, for the full period of the guarantee.
+          </p>
+          <h2>What it doesn't cover</h2>
+          <ul>
+            <li>Storm damage, impact damage or damage caused by anyone else working on the roof after us. (That is what your buildings insurance is for, and we will help with the claim.)</li>
+            <li>Materials failing through a manufacturing fault. Those are covered by the manufacturer's own guarantee, which we pass on to you.</li>
+            <li>Parts of the roof we did not work on. If we repair one slope, the guarantee covers that slope.</li>
+            <li>Normal wear, moss and debris, or blocked gutters that have not been cleared.</li>
+          </ul>
+          <h2>Not insurance-backed, and why we say so</h2>
+          <p>
+            Some roofing firms sell insurance-backed guarantees, where a third party pays if the firm goes out of business. Ours is not insurance-backed. It is a promise from Oakwell Roofing Ltd, a limited company that has every intention of still being here in 25 years. We would rather tell you that plainly than let you assume otherwise.
+          </p>
+          <h2>How to make a claim</h2>
+          <p>
+            Call or email with your address and a photo of the problem. We come and look, and if it is our workmanship we fix it. Keep your invoice and the written guarantee we give you when the job finishes; they are all you need.
+          </p>
+        </div>
+      </div>
+    </section>
+    <CtaBand />
+  </main>
+</Base>

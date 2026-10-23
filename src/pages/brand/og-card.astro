@@ -1,0 +1,32 @@
+---
+/** Rendered once at 1200x630 by a screenshot script to produce /og-image.jpg. Not linked, not indexed. */
+import '@/styles/global.css';
+import Logo from '@/components/Logo.astro';
+import { Image } from 'astro:assets';
+import { photo } from '@/lib/photos';
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>OG card</title>
+  </head>
+  <body class="m-0 bg-ink">
+    <div class="relative h-[630px] w-[1200px] overflow-hidden bg-ink text-white">
+      <Image src={photo('hero-slate-new-build.jpg')} alt="" width={1200} height={630} class="absolute inset-0 h-full w-full object-cover object-[60%_40%]" />
+      <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/60 to-ink/20"></div>
+      <div class="absolute inset-0 flex flex-col justify-between p-16">
+        <div class="text-[84px] leading-none"><Logo tone="white" /></div>
+        <div>
+          <p class="font-display text-[64px] font-bold leading-[1] tracking-[-0.02em]" style="font-stretch:108%">Roofs built for<br />Yorkshire weather.</p>
+          <p class="mt-6 text-[26px] text-white/85">Slate, tile and flat roofing across West Yorkshire · 07469 179470</p>
+        </div>
+      </div>
+    </div>
+    <div id="mark-512" class="flex h-[512px] w-[512px] items-center justify-center bg-navy text-[400px] leading-none">
+      <Logo variant="mark" tone="white" />
+    </div>
+  </body>
+</html>

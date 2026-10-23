@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import { site } from '@/data/site';
+
+const items = [
+  { icon: 'years', big: `${site.experienceYears} years`, small: 'on the tools' },
+  { icon: 'shield', big: '25-year guarantee', small: 'on new roofs and flat roofs' },
+  { icon: 'file', big: '£10m insured', small: `public liability, ${site.insurance.provider}` },
+  { icon: 'clock', big: '24/7', small: 'emergency call-outs' },
+];
+---
+
+<div class="border-b border-stone-200 bg-white">
+  <ul class="container-x grid grid-cols-2 divide-stone-200 md:grid-cols-4 md:divide-x">
+    {items.map((it) => (
+      <li class="flex items-center gap-3 py-5 md:justify-center md:px-4">
+        <Icon name={it.icon} class="h-7 w-7 shrink-0 text-terracotta" />
+        <div class="leading-tight">
+          <div class="font-display text-[17px] font-bold text-navy">{it.big}</div>
+          <div class="text-[13.5px] text-stone">{it.small}</div>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>

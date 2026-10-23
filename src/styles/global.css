@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource-variable/source-sans-3";
+
+/*
+  Oakwell Roofing design tokens.
+  Palette from the materials in the job photos: slate, Oakwell blue, ridge terracotta, Yorkshire stone, limewash.
+*/
+@theme {
+  --color-ink: #111a21;
+  --color-navy: #1e3a4f;
+  --color-navy-700: #27506c;
+  --color-navy-100: #e4ebf1;
+  --color-blue: #2e6e9e;
+  --color-blue-300: #8fc1e3;
+  --color-terracotta: #c2572b;
+  --color-terracotta-600: #a8491f;
+  --color-stone: #8a7b6a;
+  --color-stone-200: #d9d3cb;
+  --color-limewash: #eef1f3;
+  --color-paper: #f8f9fa;
+
+  --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-sans: "Source Sans 3 Variable", "Source Sans 3", system-ui, sans-serif;
+
+  --text-display: clamp(2.5rem, 6vw, 4.75rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.025em;
+  --text-h2: clamp(1.9rem, 3.4vw, 2.75rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: clamp(1.25rem, 1.8vw, 1.5rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.01em;
+
+  --shadow-soft: 0 1px 2px rgb(17 26 33 / 0.06), 0 12px 32px -12px rgb(17 26 33 / 0.25);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display font-bold text-navy;
+    text-wrap: balance;
+  }
+  h1, h2 {
+    font-stretch: 108%;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-blue);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--color-blue-300);
+    color: var(--color-ink);
+  }
+  img {
+    @apply max-w-full h-auto;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+  .eyebrow {
+    @apply font-display text-xs font-semibold uppercase tracking-[0.16em] text-terracotta;
+  }
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-outline-light,
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 font-display text-[15px] font-semibold leading-none transition-colors duration-200 whitespace-nowrap;
+  }
+  .btn-primary {
+    @apply bg-terracotta text-white hover:bg-terracotta-600;
+  }
+  .btn-secondary {
+    @apply bg-navy text-white hover:bg-navy-700;
+  }
+  .btn-outline {
+    @apply border border-navy/30 text-navy hover:border-navy hover:bg-navy-100;
+  }
+  .btn-outline-light {
+    @apply border border-white/50 text-white hover:bg-white/10 hover:border-white;
+  }
+  .btn-whatsapp {
+    @apply bg-[#1f7a4d] text-white hover:bg-[#19633e];
+  }
+  .rule {
+    @apply border-t border-stone-200;
+  }
+  .prose-oak {
+    @apply text-[1.0625rem] leading-relaxed text-ink/85;
+  }
+  .prose-oak h2 {
+    @apply text-h3 mt-10 mb-3;
+  }
+  .prose-oak h3 {
+    @apply text-lg mt-8 mb-2;
+  }
+  .prose-oak p {
+    @apply mb-4 max-w-[68ch];
+  }
+  .prose-oak ul {
+    @apply mb-5 space-y-1.5 pl-5 list-disc marker:text-terracotta max-w-[68ch];
+  }
+  .prose-oak ol {
+    @apply mb-5 space-y-1.5 pl-5 list-decimal marker:text-terracotta marker:font-semibold max-w-[68ch];
+  }
+  .prose-oak a {
+    @apply text-blue underline underline-offset-2 hover:text-navy;
+  }
+  .prose-oak strong {
+    @apply font-semibold text-ink;
+  }
+  .field {
+    @apply w-full rounded-md border border-stone-200 bg-white px-4 py-3 text-ink placeholder:text-stone focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/30;
+  }
+  .label {
+    @apply mb-1.5 block font-display text-sm font-semibold text-navy;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Reveal on scroll: visible by default, animates only when JS and motion are allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

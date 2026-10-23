@@ -1,0 +1,78 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Faq from '@/components/Faq.astro';
+import ContactDetails from '@/components/ContactDetails.astro';
+import Icon from '@/components/Icon.astro';
+import { site } from '@/data/site';
+
+const now = [
+  { title: 'Keep people clear', text: 'Keep everyone away from the area below any loose slates, tiles or a damaged chimney, inside and out. Do not go on the roof.' },
+  { title: 'Catch the water', text: 'A bucket under the drip and a towel on the floor. If water is near a light fitting, turn the circuit off at the consumer unit.' },
+  { title: 'Photos from the ground', text: 'If it is safe, take a couple of photos from outside. They help us and they help any insurance claim.' },
+  { title: 'Call us', text: `Ring ${site.phoneDisplay}. Tell us what you can see and where you are. We will tell you what happens next and when we can be there.` },
+];
+
+const faqs = [
+  { q: 'Do you really answer at night and at weekends?', a: 'Yes. We offer 24/7 emergency call-outs. If we are already on another emergency we will tell you honestly how long we will be.' },
+  { q: 'Is there a call-out charge?', a: 'For out-of-hours call-outs, yes. We tell you the charge on the phone before we set off so there are no surprises, and it appears on the invoice you can submit to your insurer.' },
+  { q: 'What will you do on the first visit?', a: 'Make the roof safe and stop the water: temporary sheeting, refixing or removing loose slates and tiles, securing lifted lead. Then we photograph the damage and talk you through the permanent repair.' },
+  { q: 'Can you help with the insurance claim?', a: 'Yes. We cover insurance work and we give you the photos, a written description of the damage and a quote for the repair. If your insurer wants to speak to the roofer, we will deal with the loss adjuster on the roofing side.' },
+];
+---
+
+<Base
+  title="Emergency Roof Repairs | 24/7 Call-Outs Across West Yorkshire | Oakwell Roofing"
+  description="Water coming in? Tiles off? Chimney moving? Oakwell Roofing offers 24/7 emergency roof repairs across Leeds, Bradford, Wakefield and West Yorkshire. Call 07469 179470 now."
+  breadcrumbs={[{ name: 'Emergency roof repairs', href: '/emergency-roof-repairs/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="24/7 emergency call-outs"
+      title="Water coming in? Call now."
+      intro="Storm damage, a leak over the stairs, a chimney that's moved. We make the roof safe first and sort the permanent repair after. Any day, any time."
+      image="reroof-hip-slate-effect.jpg"
+      imageAlt="Hip roof under a dramatic storm sky"
+      crumbs={[{ name: 'Emergency roof repairs', href: '/emergency-roof-repairs/' }]}
+    />
+
+    <section class="border-b border-stone-200 bg-white">
+      <div class="container-x flex flex-col items-start gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="font-display text-lg font-semibold text-navy">Ring {site.contactName} directly. No call centre, no queue.</p>
+        <div class="flex gap-3">
+          <a href={site.phoneHref} class="btn-primary !px-7 !py-4 !text-base"><Icon name="phone" class="h-5 w-5" /> {site.phoneDisplay}</a>
+          <a href={site.whatsappHref} target="_blank" rel="noopener" class="btn-outline !py-4"><Icon name="whatsapp" class="h-5 w-5" /> WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20">
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <p class="eyebrow">Right now</p>
+          <h2 class="mt-2 text-h2">What to do while you wait</h2>
+          <ol class="mt-8 space-y-6">
+            {now.map((s, i) => (
+              <li class="flex gap-5">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta font-display text-[15px] font-bold text-white">{i + 1}</span>
+                <div>
+                  <h3 class="text-h3">{s.title}</h3>
+                  <p class="mt-1 max-w-[56ch] text-ink/80">{s.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <h2 class="mt-14 text-h2">What we do when we arrive</h2>
+          <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+            {['Make the roof safe and stop the water', 'Secure or remove anything that could fall', 'Photograph the damage from the roof', 'Explain what caused it and what it needs', 'Quote the permanent repair in writing', 'Give you what you need for an insurance claim'].map((t) => (
+              <li class="flex items-start gap-3 rounded-md border border-stone-200 bg-white p-4 text-[15.5px]"><Icon name="check" class="mt-0.5 h-5 w-5 shrink-0 text-terracotta" />{t}</li>
+            ))}
+          </ul>
+        </div>
+        <aside class="lg:col-span-5"><ContactDetails /></aside>
+      </div>
+    </section>
+
+    <Faq items={faqs} heading="Emergency call-outs: what to expect" />
+  </main>
+</Base>

@@ -1,0 +1,148 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { photo, type GalleryItem, galleryCategories } from '@/lib/photos';
+
+interface Props {
+  items: GalleryItem[];
+  filters?: boolean;
+  columns?: 3 | 4;
+}
+const { items, filters = false, columns = 4 } = Astro.props;
+const colClass = columns === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+---
+
+<div data-gallery>
+  {filters && (
+    <div class="mb-8 flex flex-wrap gap-2" role="group" aria-label="Filter photos">
+      {galleryCategories.map((c, i) => (
+        <button
+          type="button"
+          class:list={[
+            'rounded-full border px-4 py-2 font-display text-sm font-semibold transition-colors',
+            i === 0 ? 'border-navy bg-navy text-white' : 'border-stone-200 bg-white text-navy hover:border-navy',
+          ]}
+          data-filter={c.key}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+        >
+          {c.label}
+        </button>
+      ))}
+    </div>
+  )}
+
+  <ul class={`grid grid-cols-1 gap-4 ${colClass}`}>
+    {items.map((it, i) => {
+      const img = photo(it.file);
+      return (
+        <li data-cat={it.category} data-reveal>
+          <button
+            type="button"
+            class="group block w-full overflow-hidden rounded-lg bg-limewash text-left shadow-soft ring-1 ring-stone-200/70 focus-visible:outline-offset-4"
+            data-lightbox-trigger={i}
+            aria-label={`Open photo: ${it.caption}`}
+          >
+            <span class="block aspect-[4/3] overflow-hidden">
+              <Image
+                src={img}
+                alt={it.alt}
+                widths={[400, 640, 900]}
+                sizes="(min-width: 1280px) 300px, (min-width: 640px) 45vw, 100vw"
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+            </span>
+            <span class="flex items-center justify-between gap-3 px-4 py-3 text-[14.5px]">
+              <span class="font-semibold text-navy">{it.caption}</span>
+              <Icon name="arrow" class="h-4 w-4 shrink-0 text-stone" />
+            </span>
+          </button>
+        </li>
+      );
+    })}
+  </ul>
+
+  <dialog class="m-auto w-[min(96vw,1200px)] max-h-[94dvh] overflow-hidden rounded-lg bg-ink p-0 text-white backdrop:bg-ink/85 backdrop:backdrop-blur-sm" data-lightbox>
+    <div class="relative">
+      <img class="block max-h-[82dvh] w-full object-contain" data-lightbox-img alt="" />
+      <div class="flex items-center justify-between gap-4 px-5 py-3">
+        <p class="text-[15px] text-white/85" data-lightbox-caption></p>
+        <div class="flex gap-1.5">
+          <button type="button" class="rounded-md border border-white/25 px-3 py-2 text-sm hover:bg-white/10" data-lightbox-prev aria-label="Previous photo">‹ Prev</button>
+          <button type="button" class="rounded-md border border-white/25 px-3 py-2 text-sm hover:bg-white/10" data-lightbox-next aria-label="Next photo">Next ›</button>
+          <button type="button" class="rounded-md bg-white/15 px-3 py-2 text-sm hover:bg-white/25" data-lightbox-close aria-label="Close">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    // Filters
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const cards = root.querySelectorAll<HTMLLIElement>('[data-cat]');
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        const key = b.dataset.filter;
+        buttons.forEach((x) => {
+          const on = x === b;
+          x.setAttribute('aria-pressed', String(on));
+          x.classList.toggle('bg-navy', on);
+          x.classList.toggle('text-white', on);
+          x.classList.toggle('border-navy', on);
+          x.classList.toggle('bg-white', !on);
+          x.classList.toggle('text-navy', !on);
+          x.classList.toggle('border-stone-200', !on);
+        });
+        cards.forEach((c) => {
+          c.hidden = !(key === 'all' || c.dataset.cat === key);
+        });
+      }),
+    );
+
+    // Lightbox
+    const dialog = root.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const img = root.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const cap = root.querySelector<HTMLElement>('[data-lightbox-caption]');
+    const triggers = [...root.querySelectorAll<HTMLButtonElement>('[data-lightbox-trigger]')];
+    if (!dialog || !img || !cap || typeof dialog.showModal !== 'function') return;
+
+    let index = 0;
+    const visible = () => triggers.filter((t) => !(t.closest('[data-cat]') as HTMLElement | null)?.hidden);
+    const show = (i: number) => {
+      const list = visible();
+      if (!list.length) return;
+      index = (i + list.length) % list.length;
+      const t = list[index];
+      const source = t.querySelector('img');
+      if (!source) return;
+      // Use the largest candidate from the thumbnail's srcset (same optimised asset set, biggest width).
+      const candidates = (source.srcset || '')
+        .split(',')
+        .map((c) => c.trim().split(/\s+/))
+        .filter((c) => c[0])
+        .map((c) => ({ url: c[0], w: parseInt(c[1] || '0', 10) }))
+        .sort((a, b) => b.w - a.w);
+      img.src = candidates[0]?.url || source.currentSrc || source.src;
+      img.alt = source.alt;
+      cap.textContent = t.getAttribute('aria-label')?.replace('Open photo: ', '') ?? '';
+    };
+    triggers.forEach((t) =>
+      t.addEventListener('click', () => {
+        show(visible().indexOf(t));
+        dialog.showModal();
+      }),
+    );
+    root.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(index - 1));
+    root.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(index + 1));
+    root.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+  });
+</script>

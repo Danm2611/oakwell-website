@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import { photo } from '@/lib/photos';
+
+const steps = [
+  { title: 'Call or send a photo', text: 'Ring Lewis or message a photo on WhatsApp. If water is coming in, say so and we move it to the front of the queue.' },
+  { title: 'We come and look', text: 'A proper look at the roof, on a ladder or from the scaffold, and a drone where it helps. We tell you what it actually needs.' },
+  { title: 'Written quote', text: 'A fixed price in writing, with the materials named. No pressure and no obligation.' },
+  { title: 'The work', text: 'Scaffold, skip and materials organised by us. We keep the site tidy and keep you informed.' },
+  { title: 'Guarantee in writing', text: 'When we finish you get our workmanship guarantee in writing: 25 years on new roofs and flat roofs.' },
+];
+---
+
+<section class="bg-limewash py-16 md:py-24">
+  <div class="container-x grid items-center gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-5" data-reveal>
+      <div class="overflow-hidden rounded-lg shadow-soft">
+        <Image
+          src={photo('membrane-battens-process.jpg')}
+          alt="Breathable membrane and new battens fitted before the tiles go on"
+          widths={[480, 760, 1100]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          loading="lazy"
+          class="aspect-[4/5] w-full object-cover"
+        />
+      </div>
+      <p class="mt-3 text-sm text-stone">Membrane and battens before tiling. Every re-roof gets new breathable membrane and treated battens.</p>
+    </div>
+    <div class="lg:col-span-7">
+      <p class="eyebrow">How a job runs</p>
+      <h2 class="mt-2 text-h2">Straightforward from first call to finished roof</h2>
+      <ol class="mt-8 space-y-6">
+        {steps.map((s, i) => (
+          <li class="flex gap-5" data-reveal>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy font-display text-[15px] font-bold text-white">{i + 1}</span>
+            <div>
+              <h3 class="text-h3">{s.title}</h3>
+              <p class="mt-1 max-w-[56ch] text-ink/80">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

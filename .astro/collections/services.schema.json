@@ -1,0 +1,90 @@
+{
+  "$ref": "#/definitions/services",
+  "definitions": {
+    "services": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "navTitle": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "metaTitle": {
+          "type": "string"
+        },
+        "metaDescription": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "imageAlt": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "guarantee": {
+          "type": "string"
+        },
+        "faqs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string"
+              },
+              "a": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "q",
+              "a"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "gallery": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "navTitle",
+        "summary",
+        "metaTitle",
+        "metaDescription",
+        "image",
+        "imageAlt",
+        "icon",
+        "order"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

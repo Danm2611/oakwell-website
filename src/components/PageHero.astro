@@ -1,0 +1,52 @@
+---
+import { Picture } from 'astro:assets';
+import { photo } from '@/lib/photos';
+
+interface Crumb { name: string; href: string }
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  image?: string;
+  imageAlt?: string;
+  crumbs?: Crumb[];
+}
+const { eyebrow, title, intro, image, imageAlt = '', crumbs = [] } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden bg-navy text-white">
+  {image && (
+    <div class="absolute inset-0 -z-20">
+      <Picture
+        src={photo(image)}
+        alt={imageAlt}
+        widths={[640, 1024, 1600, 2200]}
+        sizes="100vw"
+        formats={['avif', 'webp']}
+        loading="eager"
+        fetchpriority="high"
+        class="h-full w-full object-cover object-center"
+        pictureAttributes={{ class: 'block h-full w-full' }}
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/60 to-ink/25"></div>
+    </div>
+  )}
+  <div class="container-x py-16 md:py-24">
+    {crumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" class="mb-6 text-[14px] text-white/70">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href="/" class="hover:text-white">Home</a></li>
+          {crumbs.map((c, i) => (
+            <li class="flex items-center gap-2">
+              <span aria-hidden="true">/</span>
+              {i === crumbs.length - 1 ? <span class="text-white" aria-current="page">{c.name}</span> : <a href={c.href} class="hover:text-white">{c.name}</a>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    {eyebrow && <p class="eyebrow mb-4 text-blue-300">{eyebrow}</p>}
+    <h1 class="max-w-[16ch] text-display text-white">{title}</h1>
+    {intro && <p class="mt-6 max-w-[56ch] text-lg text-white/85 md:text-xl">{intro}</p>}
+  </div>
+</section>

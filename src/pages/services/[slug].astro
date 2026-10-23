@@ -1,0 +1,121 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Faq from '@/components/Faq.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import PhotoGrid from '@/components/PhotoGrid.astro';
+import QuoteForm from '@/components/QuoteForm.astro';
+import Icon from '@/components/Icon.astro';
+import { getCollection, render } from 'astro:content';
+import { gallery } from '@/lib/photos';
+import { site } from '@/data/site';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((s) => ({ params: { slug: s.id }, props: { service: s } }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const all = await getCollection('services');
+const related = service.data.related.map((id) => all.find((s) => s.id === id)).filter(Boolean);
+const photos = service.data.gallery.map((f) => gallery.find((g) => g.file === f)).filter((g): g is NonNullable<typeof g> => Boolean(g));
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.data.title,
+  serviceType: service.data.title,
+  description: service.data.summary,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: 'West Yorkshire',
+  url: new URL(Astro.url.pathname, Astro.site).href,
+};
+---
+
+<Base
+  title={service.data.metaTitle}
+  description={service.data.metaDescription}
+  breadcrumbs={[{ name: 'Services', href: '/services/' }, { name: service.data.title, href: `/services/${service.id}/` }]}
+  schema={[serviceSchema]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="Services"
+      title={service.data.title}
+      intro={service.data.summary}
+      image={service.data.image}
+      imageAlt={service.data.imageAlt}
+      crumbs={[{ name: 'Services', href: '/services/' }, { name: service.data.title, href: `/services/${service.id}/` }]}
+    />
+
+    <section class="py-14 md:py-20">
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <article class="prose-oak lg:col-span-7">
+          <Content />
+        </article>
+        <aside class="lg:col-span-5">
+          <div class="sticky top-24 grid gap-5">
+            {service.data.guarantee && (
+              <div class="rounded-lg border border-stone-200 bg-white p-6 shadow-soft">
+                <div class="flex items-start gap-4">
+                  <Icon name="shield" class="mt-0.5 h-6 w-6 shrink-0 text-terracotta" />
+                  <div>
+                    <h2 class="font-display text-lg font-bold text-navy">Guarantee</h2>
+                    <p class="mt-1 text-[15.5px] text-ink/80">{service.data.guarantee}.</p>
+                    <p class="mt-2 text-sm text-stone">{site.guaranteeNote}</p>
+                    <a href="/guarantee/" class="mt-3 inline-block font-display text-sm font-semibold text-terracotta">What's covered →</a>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div class="rounded-lg bg-navy p-6 text-white">
+              <h2 class="font-display text-lg font-bold">Talk to {site.contactName}</h2>
+              <p class="mt-1 text-[15.5px] text-white/80">Call, or send a photo on WhatsApp for a quick first opinion.</p>
+              <div class="mt-4 grid gap-2.5">
+                <a href={site.phoneHref} class="btn-primary"><Icon name="phone" class="h-4.5 w-4.5" /> {site.phoneDisplay}</a>
+                <a href={site.whatsappHref} target="_blank" rel="noopener" class="btn-outline-light"><Icon name="whatsapp" class="h-4.5 w-4.5" /> WhatsApp a photo</a>
+              </div>
+            </div>
+            {related.length > 0 && (
+              <div class="rounded-lg border border-stone-200 bg-paper p-6">
+                <h2 class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-stone">Related</h2>
+                <ul class="mt-3 space-y-2">
+                  {related.map((r) => r && (
+                    <li><a href={`/services/${r.id}/`} class="inline-flex items-center gap-2 font-display font-semibold text-navy hover:text-terracotta">{r.data.navTitle} <Icon name="arrow" class="h-4 w-4" /></a></li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    {photos.length > 0 && (
+      <section class="bg-limewash py-14 md:py-20" aria-labelledby="examples-heading">
+        <div class="container-x">
+          <p class="eyebrow">Examples</p>
+          <h2 id="examples-heading" class="mt-2 mb-8 text-h2">{service.data.title} we've done</h2>
+          <PhotoGrid items={photos} columns={photos.length > 4 ? 4 : 3} />
+        </div>
+      </section>
+    )}
+
+    <Faq items={service.data.faqs} heading={`${service.data.title}: questions people ask`} />
+
+    <section class="border-t border-stone-200 py-16 md:py-20" aria-labelledby="svc-quote-heading">
+      <div class="container-x grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <p class="eyebrow">Get a quote</p>
+          <h2 id="svc-quote-heading" class="mt-2 text-h2">Ask us about {service.data.navTitle.toLowerCase()}</h2>
+          <p class="mt-4 text-ink/80">A few details and a photo if you have one, and {site.contactName} will call you back.</p>
+        </div>
+        <div class="lg:col-span-8">
+          <QuoteForm compact preselect={service.id} />
+        </div>
+      </div>
+    </section>
+    <CtaBand />
+  </main>
+</Base>

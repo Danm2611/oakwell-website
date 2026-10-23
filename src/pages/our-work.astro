@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import PhotoGrid from '@/components/PhotoGrid.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import { gallery } from '@/lib/photos';
+---
+
+<Base
+  title="Our Work | Roofing Projects Across West Yorkshire | Oakwell Roofing"
+  description="Photos of our recent roofing work across Leeds and West Yorkshire: natural slate new builds, slate-effect and tile re-roofs, GRP flat roofs, dormers, chimney rebuilds and leadwork."
+  breadcrumbs={[{ name: 'Our work', href: '/our-work/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="Our work"
+      title="Roofs we've built and repaired"
+      intro="Photographed from the scaffold and the air, not a stock library. Filter by the kind of job you're thinking about."
+      image="new-build-dormers-aerial.jpg"
+      imageAlt="Aerial view of a new build slate roof with three dormers"
+      crumbs={[{ name: 'Our work', href: '/our-work/' }]}
+    />
+    <section class="py-14 md:py-20">
+      <div class="container-x">
+        <PhotoGrid items={gallery} filters />
+        <p class="mt-10 max-w-[60ch] text-ink/75">
+          More photos, including jobs in progress, go up on our <a href="https://www.facebook.com/p/Oakwell-Roofing-Ltd-100089302566138/" target="_blank" rel="noopener" class="text-blue underline underline-offset-2">Facebook page</a> most weeks.
+        </p>
+      </div>
+    </section>
+    <CtaBand heading="Want a roof like one of these?" />
+  </main>
+</Base>

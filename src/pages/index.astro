@@ -1,0 +1,147 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import TrustStrip from '@/components/TrustStrip.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import Process from '@/components/Process.astro';
+import GuaranteeBand from '@/components/GuaranteeBand.astro';
+import ReviewsBand from '@/components/ReviewsBand.astro';
+import QuoteForm from '@/components/QuoteForm.astro';
+import ContactDetails from '@/components/ContactDetails.astro';
+import Icon from '@/components/Icon.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { photo } from '@/lib/photos';
+import { site, areas } from '@/data/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const featured = services.slice(0, 6);
+
+const work = [
+  { file: 'new-build-stone-house.jpg', caption: 'Natural slate on a stone new build', span: 'lg:col-span-2 lg:row-span-2' },
+  { file: 'reroof-hip-slate-effect.jpg', caption: 'Slate-effect re-roof', span: '' },
+  { file: 'chimney-stone-rebuild.jpg', caption: 'Stone chimney rebuild', span: '' },
+  { file: 'flat-roof-grp-lantern.jpg', caption: 'GRP flat roof with lantern', span: '' },
+  { file: 'dormer-composite-cladding.jpg', caption: 'Dormer, composite clad', span: '' },
+];
+---
+
+<Base
+  title="Oakwell Roofing Ltd | Roofers in Morley, Leeds and West Yorkshire"
+  description="Slate, tile and flat roofing, roof repairs, chimneys and leadwork for homes and new builds across West Yorkshire. 15 years' experience, 25-year guarantee on new roofs, 24/7 emergency call-outs. Call 07469 179470."
+>
+  <main id="main">
+    <Hero />
+    <TrustStrip />
+
+    <section class="py-16 md:py-24" aria-labelledby="services-heading">
+      <div class="container-x">
+        <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="eyebrow">What we do</p>
+            <h2 id="services-heading" class="mt-2 text-h2">Every part of the roof, done properly</h2>
+            <p class="mt-4 text-ink/80">
+              From a single slipped slate to a complete new roof on a new build. We are roofers first, so the leadwork, chimneys and flat roofs get the same care as the slates and tiles.
+            </p>
+          </div>
+          <a href="/services/" class="btn-outline self-start md:self-auto">All services</a>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((s) => (
+            <ServiceCard
+              slug={s.id}
+              title={s.data.title}
+              summary={s.data.summary}
+              image={s.data.image}
+              imageAlt={s.data.imageAlt}
+              icon={s.data.icon}
+            />
+          ))}
+        </div>
+        <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[15px]">
+          {services.slice(6).map((s) => (
+            <a href={`/services/${s.id}/`} class="inline-flex items-center gap-1.5 font-display font-semibold text-navy hover:text-terracotta">
+              {s.data.navTitle}
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          ))}
+          <a href="/emergency-roof-repairs/" class="inline-flex items-center gap-1.5 font-display font-semibold text-navy hover:text-terracotta">
+            Emergency roof repairs
+            <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-ink py-16 text-white md:py-24" aria-labelledby="work-heading">
+      <div class="container-x">
+        <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="eyebrow">Recent work</p>
+            <h2 id="work-heading" class="mt-2 text-h2 text-white">The roofs speak for themselves</h2>
+            <p class="mt-4 text-white/75">Slate, tile, flat roofs, chimneys and leadwork across West Yorkshire. Photographed from the scaffold and the air.</p>
+          </div>
+          <a href="/our-work/" class="btn-outline-light self-start md:self-auto">See all our work</a>
+        </div>
+        <ul class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+          {work.map((w, i) => (
+            <li class={`group relative overflow-hidden rounded-lg bg-navy ${w.span}`} data-reveal>
+              <Image
+                src={photo(w.file)}
+                alt={w.caption}
+                widths={[480, 800, 1200]}
+                sizes={i === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'}
+                loading="lazy"
+                class={`w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] ${i === 0 ? 'aspect-[4/3] lg:h-full lg:aspect-auto' : 'aspect-[4/3]'}`}
+              />
+              <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent px-4 pb-4 pt-12 text-[14.5px] font-semibold">{w.caption}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <Process />
+    <GuaranteeBand />
+
+    <section class="bg-paper py-16 md:py-20" aria-labelledby="areas-heading">
+      <div class="container-x grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-5">
+          <p class="eyebrow">Where we work</p>
+          <h2 id="areas-heading" class="mt-2 text-h2">Based in Morley. Covering West Yorkshire.</h2>
+          <p class="mt-4 text-ink/80">
+            Our yard is on Fountain Street in Morley, ten minutes from Leeds city centre and a short run down the M62 to Bradford, Wakefield, Huddersfield and Halifax. If you are in West Yorkshire, we cover you.
+          </p>
+        </div>
+        <ul class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:col-span-7">
+          {areas.map((a) => (
+            <li>
+              <a href={`/areas/${a.slug}/`} class="flex items-center justify-between rounded-md border border-stone-200 bg-white px-4 py-3.5 font-display font-semibold text-navy transition-colors hover:border-navy hover:bg-navy-100">
+                {a.name}
+                <Icon name="arrow" class="h-4 w-4 text-stone" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <ReviewsBand />
+
+    <section id="quote" class="py-16 md:py-24" aria-labelledby="quote-heading">
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <p class="eyebrow">Get a quote</p>
+          <h2 id="quote-heading" class="mt-2 text-h2">Tell us about the roof</h2>
+          <p class="mt-4 mb-8 max-w-[56ch] text-ink/80">
+            A few details and a photo if you have one. {site.contactName} will call you back to arrange a time to look. If it's urgent, ring {site.phoneDisplay} instead.
+          </p>
+          <QuoteForm />
+        </div>
+        <div class="lg:col-span-5">
+          <ContactDetails />
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

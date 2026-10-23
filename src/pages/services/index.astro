@@ -1,0 +1,44 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import GuaranteeBand from '@/components/GuaranteeBand.astro';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  title="Roofing Services in West Yorkshire | Oakwell Roofing Ltd"
+  description="Re-roofing, roof repairs, flat roofs, chimneys, leadwork, dormers, roof windows, fascias and guttering, storm damage and new-build roofing across Leeds and West Yorkshire."
+  breadcrumbs={[{ name: 'Services', href: '/services/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="Services"
+      title="Every part of the roof"
+      intro="Slate, tile and flat roofing, chimneys and leadwork, for homes, extensions and new builds. Pick the job and we'll tell you how we do it."
+      image="ridge-roofer-terracotta.jpg"
+      imageAlt="Roofer on the ridge of a terracotta tile roof"
+      crumbs={[{ name: 'Services', href: '/services/' }]}
+    />
+    <section class="py-16 md:py-20">
+      <div class="container-x grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <ServiceCard slug={s.id} title={s.data.title} summary={s.data.summary} image={s.data.image} imageAlt={s.data.imageAlt} icon={s.data.icon} />
+        ))}
+        <a href="/emergency-roof-repairs/" class="flex flex-col justify-between rounded-lg bg-navy p-6 text-white shadow-soft" data-reveal>
+          <div>
+            <p class="eyebrow text-blue-300">24/7</p>
+            <h3 class="mt-2 text-h3 text-white">Emergency roof repairs</h3>
+            <p class="mt-2 text-white/80">Water coming in, tiles off, a chimney moving. Call any time and we'll make it safe.</p>
+          </div>
+          <span class="mt-6 font-display font-semibold text-blue-300">What to do right now →</span>
+        </a>
+      </div>
+    </section>
+    <GuaranteeBand />
+    <CtaBand />
+  </main>
+</Base>

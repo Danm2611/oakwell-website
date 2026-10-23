@@ -1,0 +1,92 @@
+---
+/**
+ * Netlify form. Plain HTML post (no JS needed) with a redirect to /thank-you/.
+ * The form keeps the name "contact" so the existing email notification to Lewis stays attached.
+ */
+import { getCollection } from 'astro:content';
+interface Props {
+  compact?: boolean;
+  preselect?: string;
+}
+const { compact = false, preselect = '' } = Astro.props;
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<form
+  name="contact"
+  method="POST"
+  action="/thank-you/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  enctype="multipart/form-data"
+  class="grid gap-5"
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hidden" aria-hidden="true">
+    <label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label for="q-name" class="label">Your name <span class="text-terracotta" aria-hidden="true">*</span></label>
+      <input id="q-name" name="name" type="text" required autocomplete="name" class="field" />
+    </div>
+    <div>
+      <label for="q-phone" class="label">Phone <span class="text-terracotta" aria-hidden="true">*</span></label>
+      <input id="q-phone" name="phone" type="tel" required autocomplete="tel" class="field" />
+    </div>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label for="q-email" class="label">Email</label>
+      <input id="q-email" name="email" type="email" autocomplete="email" class="field" />
+    </div>
+    <div>
+      <label for="q-postcode" class="label">Postcode <span class="text-terracotta" aria-hidden="true">*</span></label>
+      <input id="q-postcode" name="postcode" type="text" required autocomplete="postal-code" placeholder="e.g. LS27 0AA" class="field" />
+    </div>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label for="q-service" class="label">What do you need?</label>
+      <select id="q-service" name="service" class="field">
+        <option value="">Not sure yet</option>
+        {services.map((s) => (
+          <option value={s.id} selected={s.id === preselect}>{s.data.navTitle}</option>
+        ))}
+        <option value="emergency">Emergency repair</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+    <fieldset>
+      <legend class="label">How urgent?</legend>
+      <div class="flex flex-wrap gap-x-5 gap-y-2 pt-1.5">
+        <label class="inline-flex items-center gap-2 text-[15px]"><input type="radio" name="urgency" value="no-rush" checked class="accent-terracotta" /> No rush</label>
+        <label class="inline-flex items-center gap-2 text-[15px]"><input type="radio" name="urgency" value="this-week" class="accent-terracotta" /> This week</label>
+        <label class="inline-flex items-center gap-2 text-[15px] text-terracotta-600"><input type="radio" name="urgency" value="water-coming-in" class="accent-terracotta" /> Water coming in</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div>
+    <label for="q-message" class="label">Tell us about the roof</label>
+    <textarea id="q-message" name="message" rows={compact ? 3 : 5} class="field" placeholder="What's the problem, what sort of roof is it, and when did you notice it?"></textarea>
+  </div>
+
+  <div>
+    <label for="q-photo" class="label">Add a photo <span class="font-normal text-stone">(optional, up to 8 MB)</span></label>
+    <input id="q-photo" name="photo" type="file" accept="image/*" class="block w-full text-[15px] text-ink/80 file:mr-4 file:rounded-md file:border-0 file:bg-navy-100 file:px-4 file:py-2.5 file:font-display file:text-sm file:font-semibold file:text-navy" />
+  </div>
+
+  <div class="flex items-start gap-3">
+    <input id="q-consent" name="consent" type="checkbox" value="yes" required class="mt-1 accent-terracotta" />
+    <label for="q-consent" class="text-[14.5px] text-ink/80">
+      I'm happy for Oakwell Roofing Ltd to use these details to reply to my enquiry.
+      <a href="/privacy/" class="text-blue underline underline-offset-2">How we handle your information</a>.
+    </label>
+  </div>
+
+  <button type="submit" class="btn-primary !py-4 !text-base sm:justify-self-start">Send enquiry</button>
+</form>

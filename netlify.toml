@@ -1,18 +1,9 @@
 [build]
   command = "npm run build"
-  publish = "build"
+  publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
-  INLINE_RUNTIME_CHUNK = "false"
-  GENERATE_SOURCEMAP = "false"
-  CI = "false"
-
-# Single-page app: every path serves index.html (used for /privacy)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  NODE_VERSION = "22"
 
 [[headers]]
   for = "/*"
@@ -21,14 +12,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-e2g5HkZP+fghbsY1m7moq4GopOo7zRRaAHNyQ2Q7oSI='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
 
 [[headers]]
-  for = "/static/*"
+  for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[headers]]
-  for = "/images/*"
-  [headers.values]
-    Cache-Control = "public, max-age=604800"
+# Old single-page anchors from the previous site
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301

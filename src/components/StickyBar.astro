@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import { site } from '@/data/site';
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-px border-t border-stone-200 bg-stone-200 md:hidden"
+  style="padding-bottom: env(safe-area-inset-bottom, 0px)"
+  aria-label="Quick contact"
+>
+  <a href={site.phoneHref} class="flex items-center justify-center gap-2 bg-white py-3.5 font-display font-semibold text-navy">
+    <Icon name="phone" class="h-5 w-5 text-terracotta" />
+    Call {site.phoneDisplay}
+  </a>
+  <a href={site.whatsappHref} target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-[#1f7a4d] py-3.5 font-display font-semibold text-white">
+    <Icon name="whatsapp" class="h-5 w-5" />
+    WhatsApp
+  </a>
+</div>

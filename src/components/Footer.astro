@@ -1,0 +1,99 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { site, areas, fullAddress } from '@/data/site';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy text-white">
+  <div class="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <div class="text-[52px] leading-none">
+        <Logo tone="white" />
+      </div>
+      <p class="mt-5 max-w-sm text-white/80">
+        Slate, tile and flat roofing, chimneys and leadwork for homes and new builds across West Yorkshire.
+        Based in Morley, Leeds.
+      </p>
+      <ul class="mt-6 space-y-3 text-[15px]">
+        <li class="flex items-center gap-3">
+          <Icon name="phone" class="h-4.5 w-4.5 text-blue-300" />
+          <a href={site.phoneHref} class="font-display font-semibold hover:text-blue-300">{site.phoneDisplay}</a>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="whatsapp" class="h-4.5 w-4.5 text-blue-300" />
+          <a href={site.whatsappHref} target="_blank" rel="noopener" class="hover:text-blue-300">Message us on WhatsApp</a>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="mail" class="h-4.5 w-4.5 text-blue-300" />
+          <a href={`mailto:${site.email}`} class="break-all hover:text-blue-300">{site.email}</a>
+        </li>
+        <li class="flex items-start gap-3">
+          <Icon name="pin" class="mt-0.5 h-4.5 w-4.5 shrink-0 text-blue-300" />
+          <span>{fullAddress()}</span>
+        </li>
+      </ul>
+      <div class="mt-6 flex gap-2">
+        <a href={site.facebook} target="_blank" rel="noopener" class="rounded-md border border-white/20 px-3 py-2 text-sm hover:bg-white/10">Facebook</a>
+        <a href={site.instagram} target="_blank" rel="noopener" class="rounded-md border border-white/20 px-3 py-2 text-sm hover:bg-white/10">Instagram</a>
+        <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="rounded-md border border-white/20 px-3 py-2 text-sm hover:bg-white/10">Google reviews</a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3">
+      <h2 class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-blue-300">Services</h2>
+      <ul class="mt-4 space-y-2.5 text-[15px]">
+        {services.map((s) => (
+          <li><a href={`/services/${s.id}/`} class="text-white/85 hover:text-white">{s.data.navTitle}</a></li>
+        ))}
+        <li><a href="/emergency-roof-repairs/" class="text-white/85 hover:text-white">Emergency roof repairs</a></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-2">
+      <h2 class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-blue-300">Areas</h2>
+      <ul class="mt-4 space-y-2.5 text-[15px]">
+        {areas.map((a) => (
+          <li><a href={`/areas/${a.slug}/`} class="text-white/85 hover:text-white">{a.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="lg:col-span-3">
+      <h2 class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-blue-300">Hours</h2>
+      <dl class="mt-4 space-y-2 text-[15px]">
+        {site.hours.map((h) => (
+          <div class="flex justify-between gap-4 border-b border-white/10 pb-2">
+            <dt class="text-white/75">{h.days}</dt>
+            <dd class="font-semibold">{h.time}</dd>
+          </div>
+        ))}
+        <div class="flex justify-between gap-4 pb-2">
+          <dt class="text-white/75">Emergencies</dt>
+          <dd class="font-semibold">24/7</dd>
+        </div>
+      </dl>
+      <ul class="mt-6 space-y-2 text-[15px]">
+        <li><a href="/guarantee/" class="text-white/85 hover:text-white">Our guarantee</a></li>
+        <li><a href="/about/" class="text-white/85 hover:text-white">About Oakwell</a></li>
+        <li><a href="/privacy/" class="text-white/85 hover:text-white">Privacy and cookies</a></li>
+        <li><a href="/privacy/#complaints" class="text-white/85 hover:text-white">Complaints</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="container-x py-6 text-[13px] leading-relaxed text-white/65">
+      <p>
+        © {year} {site.legalName}. Registered in England and Wales, company number {site.companyNumber}.
+        Registered office: {fullAddress()}. VAT registration number {site.vatNumber}.
+      </p>
+      <p class="mt-1">
+        Public liability insurance: {site.insurance.cover} with {site.insurance.provider}. {site.guaranteeNote}
+      </p>
+    </div>
+  </div>
+</footer>

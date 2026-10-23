@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/data/site';
+---
+
+<Base title="Page not found | Oakwell Roofing" description="That page isn't here." noindex>
+  <main id="main" class="flex-1">
+    <section class="py-24 md:py-32">
+      <div class="container-x max-w-2xl">
+        <p class="eyebrow">404</p>
+        <h1 class="mt-2 text-h2">That page isn't here</h1>
+        <p class="mt-4 text-lg text-ink/80">The link may be old. Try one of these, or call {site.phoneDisplay}.</p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          <li><a href="/" class="btn-outline w-full">Home</a></li>
+          <li><a href="/services/" class="btn-outline w-full">Services</a></li>
+          <li><a href="/our-work/" class="btn-outline w-full">Our work</a></li>
+          <li><a href="/contact/" class="btn-primary w-full">Get a quote</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</Base>

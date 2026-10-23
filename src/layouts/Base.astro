@@ -1,0 +1,140 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import StickyBar from '@/components/StickyBar.astro';
+import { site } from '@/data/site';
+
+interface Breadcrumb { name: string; href: string }
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+  breadcrumbs?: Breadcrumb[];
+  schema?: Record<string, unknown>[];
+  chrome?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-image.jpg',
+  noindex = false,
+  breadcrumbs = [],
+  schema = [],
+  chrome = true,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogAbs = new URL(ogImage, Astro.site).href;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'RoofingContractor',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  telephone: site.phoneE164,
+  email: site.email,
+  image: ogAbs,
+  logo: `${site.url}/logo-512.png`,
+  description:
+    'Slate, tile and flat roofing, roof repairs, chimney work and leadwork for homes and new builds across West Yorkshire.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: `${site.address.town}, ${site.address.city}`,
+    addressRegion: site.address.region,
+    postalCode: site.address.postcode,
+    addressCountry: 'GB',
+  },
+  areaServed: ['West Yorkshire', 'Leeds', 'Bradford', 'Wakefield', 'Huddersfield', 'Halifax', 'Dewsbury', 'Morley', 'Cleckheaton'],
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday', 'Sunday'], opens: '09:00', closes: '16:00' },
+  ],
+  vatID: `GB${site.vatNumber}`,
+  sameAs: [site.facebook, site.instagram],
+};
+
+const crumbs =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [{ name: 'Home', href: '/' }, ...breadcrumbs].map((c, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: c.name,
+          item: new URL(c.href, Astro.site).href,
+        })),
+      }
+    : null;
+
+const schemas = [business, crumbs, ...schema].filter(Boolean);
+---
+
+<!doctype html>
+<html lang="en-GB" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
+    <meta name="theme-color" content="#1e3a4f" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogAbs} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
+  </head>
+  <body class="min-h-dvh flex flex-col pb-[66px] md:pb-0">
+    {chrome && <Header />}
+    <slot />
+    {chrome && <Footer />}
+    {chrome && <StickyBar />}
+
+    <script>
+      // Reveal-on-scroll. Content is visible without JS; this only adds the fade for browsers that allow motion.
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (items.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { photo } from '@/lib/photos';
+
+const areas = (await getCollection('areas')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  title="Areas We Cover | Roofers Across West Yorkshire | Oakwell Roofing"
+  description="Oakwell Roofing covers all of West Yorkshire from Morley: Leeds, Bradford, Wakefield, Huddersfield, Halifax, Dewsbury, Cleckheaton and everywhere between."
+  breadcrumbs={[{ name: 'Areas', href: '/areas/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="Where we work"
+      title="Based in Morley. Covering West Yorkshire."
+      intro="Ten minutes from Leeds, a short run down the M62 to Bradford, Wakefield, Huddersfield and Halifax. If you're in West Yorkshire, we cover you."
+      image="new-build-front-aerial.jpg"
+      imageAlt="Aerial view of a new build slate roof"
+      crumbs={[{ name: 'Areas', href: '/areas/' }]}
+    />
+    <section class="py-16 md:py-20">
+      <ul class="container-x grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {areas.map((a) => (
+          <li data-reveal>
+            <a href={`/areas/${a.id}/`} class="group block overflow-hidden rounded-lg bg-white shadow-soft ring-1 ring-stone-200/70">
+              <Image src={photo(a.data.image)} alt={a.data.imageAlt} widths={[400, 640]} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+              <div class="p-5">
+                <h2 class="text-h3">Roofers in {a.data.name}</h2>
+                <p class="mt-2 text-[15px] text-ink/75">{a.data.travel}</p>
+                <span class="mt-4 inline-flex items-center gap-2 font-display text-sm font-semibold text-terracotta">{a.data.name} roofing <Icon name="arrow" class="h-4 w-4" /></span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="container-x mt-10 text-ink/75">Not listed? We cover the whole county. Call {`07469 179470`} and ask.</p>
+    </section>
+    <CtaBand />
+  </main>
+</Base>

@@ -1,0 +1,91 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import Process from '@/components/Process.astro';
+import GuaranteeBand from '@/components/GuaranteeBand.astro';
+import ReviewsBand from '@/components/ReviewsBand.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import Icon from '@/components/Icon.astro';
+import { Image } from 'astro:assets';
+import { photo } from '@/lib/photos';
+import { site, fullAddress } from '@/data/site';
+
+const facts = [
+  { icon: 'years', title: `${site.experienceYears} years on the tools`, text: `${site.contactName} has been roofing for ${site.experienceYears} years and runs every job himself.` },
+  { icon: 'pin', title: 'Based in Morley', text: 'Our yard is on Fountain Street, Morley. We cover the whole of West Yorkshire from here.' },
+  { icon: 'shield', title: '£10 million insured', text: `Public liability insurance with ${site.insurance.provider}. Certificate available on request.` },
+  { icon: 'file', title: 'Limited company, VAT registered', text: `Oakwell Roofing Ltd, company number ${site.companyNumber}. VAT number ${site.vatNumber}.` },
+  { icon: 'clock', title: '24/7 emergency call-outs', text: 'If water is coming in, we answer the phone and we come out, whatever the day.' },
+  { icon: 'check', title: 'Hundreds of roofs and repairs', text: 'Across Leeds, Bradford, Wakefield, Huddersfield and the rest of the county.' },
+];
+---
+
+<Base
+  title="About Oakwell Roofing | Roofers in Morley, Leeds"
+  description="Oakwell Roofing Ltd is a small roofing firm based in Morley, Leeds, run by Lewis with 15 years' experience. Slate, tile and flat roofs, chimneys and leadwork across West Yorkshire. £10m insured."
+  breadcrumbs={[{ name: 'About', href: '/about/' }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow="About us"
+      title="A small roofing firm that does the job properly"
+      intro="Oakwell Roofing is run by Lewis from Morley, Leeds. Fifteen years on roofs, a small team, and a straightforward way of working."
+      image="team-terracotta-roof.jpg"
+      imageAlt="Two Oakwell roofers finishing a terracotta tile roof"
+      crumbs={[{ name: 'About', href: '/about/' }]}
+    />
+
+    <section class="py-16 md:py-24">
+      <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-start">
+        <div class="prose-oak lg:col-span-7">
+          <h2 class="!mt-0">Who we are</h2>
+          <p>
+            Oakwell Roofing Ltd is a roofing contractor based in Morley, on the south side of Leeds. It is run by Lewis, who has been roofing for {site.experienceYears} years, and a small team who have worked together long enough to know how each other lays a slate.
+          </p>
+          <p>
+            We do every kind of roofing: natural slate and stone slate on period houses, slate-effect and concrete tile on semis, GRP and single-ply flat roofs, dormers for loft conversions, chimneys, leadwork, fascias and gutters, and complete roofs on new builds for builders and developers. What we don't do is subcontract the awkward bits. The leadwork, the chimneys and the flat roofs are ours.
+          </p>
+          <h2>How we work</h2>
+          <p>
+            You call or send a photo. We come and look, properly, and tell you what the roof actually needs, which is sometimes less than you were expecting. You get a fixed price in writing with the materials named. We organise the scaffold and the skip, keep the site tidy, and when we finish you get our guarantee in writing.
+          </p>
+          <p>
+            We don't do pressure, we don't do "today only" prices, and we don't put logos on our van that we haven't earned. If you want to check us out, our company details are at the bottom of every page and our reviews are on Google where we can't touch them.
+          </p>
+          <h2>Where we work</h2>
+          <p>
+            All of West Yorkshire, from {site.address.town}. Leeds, Bradford, Wakefield, Huddersfield, Halifax, Dewsbury, Cleckheaton and everywhere in between. See the <a href="/areas/">areas we cover</a>.
+          </p>
+        </div>
+        <div class="lg:col-span-5" data-reveal>
+          <div class="overflow-hidden rounded-lg shadow-soft">
+            <Image src={photo('ridge-roofer-terracotta.jpg')} alt="Lewis on the ridge of a terracotta tile roof" widths={[480, 760, 1100]} sizes="(min-width: 1024px) 40vw, 100vw" loading="lazy" class="aspect-[4/5] w-full object-cover" />
+          </div>
+          <p class="mt-3 text-sm text-stone">On the ridge of a terracotta re-roof. Every job is run by Lewis in person.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-limewash py-16 md:py-20" aria-labelledby="facts-heading">
+      <div class="container-x">
+        <p class="eyebrow">The facts</p>
+        <h2 id="facts-heading" class="mt-2 mb-8 text-h2">What you're getting</h2>
+        <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {facts.map((f) => (
+            <li class="rounded-lg bg-white p-6 shadow-soft ring-1 ring-stone-200/70" data-reveal>
+              <Icon name={f.icon} class="h-7 w-7 text-terracotta" />
+              <h3 class="mt-4 text-h3">{f.title}</h3>
+              <p class="mt-2 text-[15.5px] text-ink/75">{f.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-8 text-sm text-stone">Registered office: {fullAddress()}.</p>
+      </div>
+    </section>
+
+    <Process />
+    <GuaranteeBand />
+    <ReviewsBand />
+    <CtaBand />
+  </main>
+</Base>

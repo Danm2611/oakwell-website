@@ -1,0 +1,76 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHero from '@/components/PageHero.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import ReviewsBand from '@/components/ReviewsBand.astro';
+import QuoteForm from '@/components/QuoteForm.astro';
+import ContactDetails from '@/components/ContactDetails.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '@/data/site';
+
+export async function getStaticPaths() {
+  const areas = await getCollection('areas');
+  return areas.map((a) => ({ params: { slug: a.id }, props: { area: a } }));
+}
+
+const { area } = Astro.props;
+const { Content } = await render(area);
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+---
+
+<Base
+  title={area.data.metaTitle}
+  description={area.data.metaDescription}
+  breadcrumbs={[{ name: 'Areas', href: '/areas/' }, { name: area.data.name, href: `/areas/${area.id}/` }]}
+>
+  <main id="main">
+    <PageHero
+      eyebrow={`Roofers in ${area.data.name}`}
+      title={`Roofing in ${area.data.name}`}
+      intro={area.data.intro}
+      image={area.data.image}
+      imageAlt={area.data.imageAlt}
+      crumbs={[{ name: 'Areas', href: '/areas/' }, { name: area.data.name, href: `/areas/${area.id}/` }]}
+    />
+
+    <section class="py-14 md:py-20">
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <article class="prose-oak lg:col-span-7">
+          <Content />
+          <h2>Getting to {area.data.name}</h2>
+          <p>{area.data.travel}</p>
+        </article>
+        <aside class="lg:col-span-5">
+          <ContactDetails />
+        </aside>
+      </div>
+    </section>
+
+    <section class="bg-limewash py-14 md:py-20" aria-labelledby="area-services">
+      <div class="container-x">
+        <p class="eyebrow">What we do in {area.data.name}</p>
+        <h2 id="area-services" class="mt-2 mb-8 text-h2">Roofing services for {area.data.name} homes</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((s) => (
+            <ServiceCard slug={s.id} title={s.data.title} summary={s.data.summary} image={s.data.image} imageAlt={s.data.imageAlt} icon={s.data.icon} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <ReviewsBand />
+
+    <section class="py-16 md:py-20" aria-labelledby="area-quote">
+      <div class="container-x grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-4">
+          <p class="eyebrow">Get a quote</p>
+          <h2 id="area-quote" class="mt-2 text-h2">Roof in {area.data.name}? Tell us about it.</h2>
+          <p class="mt-4 text-ink/80">A few details and a photo if you have one. {site.contactName} will call you back to arrange a look.</p>
+        </div>
+        <div class="lg:col-span-8"><QuoteForm compact /></div>
+      </div>
+    </section>
+    <CtaBand />
+  </main>
+</Base>
